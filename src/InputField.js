@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
+//import ReactDOM from 'react-dom'
 import './InputField.css'
 
 class InputField extends Component {
@@ -20,7 +20,7 @@ class InputField extends Component {
         this._ref = this._ref.bind(this)
     }
 
-    _onFocus(event) {
+    _onFocus(event){
         var onFocus = false;
         var elem = this.state.elem;
         switch (event.type) {
@@ -41,14 +41,14 @@ class InputField extends Component {
             this.setState({ value: nextProps.value })
     }
 
-    _onChange(event) {
+    _onChange = (event) => {
         this.setState({
             value: event.target.value,
         })
         if (this.props.onChange) this.props.onChange(event)
     }
 
-    _classNameCont({ outlined, onFocus, onActive }) {
+    _classNameCont = ({ outlined, onFocus, onActive }) => {
         var result = 'ch-field '
 
         if (outlined) {
@@ -63,9 +63,9 @@ class InputField extends Component {
         return result;
     }
 
-    _classNameInput({ outlined }) { return (outlined) ? 'ch-input-outlined browser-default' : 'ch-input browser-default' }
+    _classNameInput = ({ outlined }) => (outlined) ? 'ch-input-outlined browser-default' : 'ch-input browser-default' 
 
-    _label({ outlined, onFocus, onActive, label }) {
+    _label = ({ outlined, onFocus, onActive, label }) => {
         if (outlined) {
 
             return (
@@ -84,8 +84,8 @@ class InputField extends Component {
         }
     }
 
-    _btn_spin_in() {
-        return (<div className='btn-spin browser-default'
+    _btn_spin_in= () =>
+        (<div className='btn-spin browser-default'
             style={{
                 position: 'relative',
                 height: 24,
@@ -115,9 +115,8 @@ class InputField extends Component {
                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
             </svg>
         </div>)
-    }
-
-    _btn_spin_out () {return <div className='btn-spin browser-default'
+    
+    _btn_spin_out = () => <div className='btn-spin browser-default'
         style={{
             position: 'relative',
             height: 24,
@@ -147,9 +146,9 @@ class InputField extends Component {
             viewBox="0 0 24 24">
             <path d="M19 13H5v-2h14v2z" />
         </svg>
-    </div>}
+    </div>
 
-    _onClickBtnSpin (value) {
+    _onClickBtnSpin = (value) => {
         var elem = this.state.elem;
         var evt = new Event('change', { bubbles: true });
         elem.value = value;
@@ -157,9 +156,7 @@ class InputField extends Component {
         if (cancel) this._onChange(evt);
     }
 
-    _ref(elem) {
-        return this.setState({ elem })
-    }
+    _ref = (elem) => this.setState({ elem })
 
     _spinButtons() {return (this.state.spinButtons) ? <div style={{ margin: 'auto 8px', display: 'flex' }} >
         {this._btn_spin_out()}
