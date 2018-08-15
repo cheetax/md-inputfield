@@ -1,0 +1,24 @@
+{
+  "name": "md-inputfield",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheetax/md-inputfield.git"
+  },
+  "keywords": [
+    "input",
+    "react",
+    "material"
+  ],
+  "author": "cheetax",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cheetax/md-inputfield/issues"
+  },
+  "homepage": "https://github.com/cheetax/md-inputfield#readme"
+}
