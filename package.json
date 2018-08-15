@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/cheetax/md-inputfield/issues"
   },
-  "homepage": "https://github.com/cheetax/md-inputfield#readme"
+  "homepage": "https://github.com/cheetax/md-inputfield#readme",
+  "dependencies": {
+    "react": "^16.4.2"
+  }
 }
