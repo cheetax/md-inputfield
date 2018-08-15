@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './InputText.css'
+import './InputField.css'
 
-class InputText extends Component {
+class InputField extends Component {
 
     constructor(props) {
         super(props)
@@ -179,4 +179,4 @@ class InputText extends Component {
         )
     }
 }
-export default InputText;
+export default InputField;
