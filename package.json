@@ -1,6 +1,6 @@
 {
-  "name": "md-inputfield",
-  "version": "0.0.1",
+  "name": "material-inputfield",
+  "version": "0.1.11",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
