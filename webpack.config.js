@@ -8,15 +8,15 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // });
 
 module.exports = {
-  entry: './src/index.js',
-  output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'index.js',
-    libraryTarget: 'commonjs2'
-  },
+  // entry: './src/index.js',
+  // output: {
+  //   path: path.resolve(__dirname, 'build'),
+  //   filename: 'index.js',
+  //   libraryTarget: 'commonjs2'
+  // },
   plugins: [
     new ExtractTextPlugin({
-      filename: 'md-InputField.css',
+      filename: 'md-inputfield.css',
     }),
   ],
   
@@ -24,7 +24,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
+       // include: path.resolve(__dirname, 'src'),
         exclude: /(node_modules|bower_components|build)/,
         use: {
           loader: 'babel-loader',
@@ -35,7 +35,7 @@ module.exports = {
       },
       {
         test: /\.*css$/,
-        include: path.resolve(__dirname, 'src'),
+        //include: path.resolve(__dirname, 'src'),
         exclude: /(node_modules|bower_components|build)/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',

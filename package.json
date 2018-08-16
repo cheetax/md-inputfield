@@ -1,12 +1,12 @@
 {
   "name": "md-inputfield",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --watch",
-    "build": "webpack"
+    "build": "webpack  --mode production"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,10 @@
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
   },
+  "files": [
+    "build",
+    "build/*.css"
+  ],
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -35,6 +39,7 @@
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "babel-runtime": "^6.26.0",
     "css-loader": "^1.0.0",
     "extract-text-webpack-plugin": "^3.0.2",
