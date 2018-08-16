@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',
-    libraryTarget: 'commonjs2'
+    //libraryTarget: 'commonjs2'
   },
   plugins:[
     new ExtractTextPlugin({
@@ -22,7 +22,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['react', ['es2015']],
+            presets: ['react', 'es2015'],
           }
         }
       },

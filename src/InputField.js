@@ -20,7 +20,7 @@ class InputField extends Component {
         this._ref = this._ref.bind(this)
     }
 
-    _onFocus(event) {
+    _onFocus (event) {
         var onFocus = false;
         var elem = this.state.elem;
         switch (event.type) {
