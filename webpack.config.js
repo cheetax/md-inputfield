@@ -1,18 +1,25 @@
 var path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const HtmlWebPackPlugin = require("html-webpack-plugin");
+
+// const htmlWebpackPlugin = new HtmlWebPackPlugin({
+//   // template: "./src/index.html",
+//   // filename: "./index.html"
+// });
 
 module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',
-    //libraryTarget: 'commonjs2'
+    libraryTarget: 'commonjs2'
   },
-  plugins:[
+  plugins: [
     new ExtractTextPlugin({
-        filename: 'md-InputField.css',
+      filename: 'md-InputField.css',
     }),
-],
+  ],
+  
   module: {
     rules: [
       {
@@ -28,29 +35,34 @@ module.exports = {
       },
       {
         test: /\.*css$/,
-        use : ExtractTextPlugin.extract({
-            fallback : 'style-loader',
-            use : [
-                'css-loader',
-                'sass-loader'
-            ]
+        include: path.resolve(__dirname, 'src'),
+        exclude: /(node_modules|bower_components|build)/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'sass-loader'
+          ]
         })
-    }
-    ]
+      }
+    ],
+    
   },
+  //plugins: [htmlWebpackPlugin],
+  
   externals: {
     // Don't bundle react or react-dom
     react: {
-        commonjs: "react",
-        commonjs2: "react",
-        amd: "React",
-        root: "React"
+      commonjs: "react",
+      commonjs2: "react",
+      amd: "React",
+      root: "React"
     },
     "react-dom": {
-        commonjs: "react-dom",
-        commonjs2: "react-dom",
-        amd: "ReactDOM",
-        root: "ReactDOM"
+      commonjs: "react-dom",
+      commonjs2: "react-dom",
+      amd: "ReactDOM",
+      root: "ReactDOM"
     }
-}
+  }
 };
