@@ -87,7 +87,7 @@ input.ch-input-outlined {
     height: 20px;
     margin: 16px 12px auto 14px;
     border: none;
-    width: -webkit-fill-available;
+    width: 100%;
     padding: 0;
     z-index: 99;
 }
