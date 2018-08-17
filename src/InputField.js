@@ -8,7 +8,8 @@ class InputField extends Component {
         this.state = {
             onFocus: false,
             label: props.label,
-            value: props.value,
+            value: props.value || 0,
+            currentValue: props.value || 0,
             outlined: props.outlined,
             type: props.type,
             name: props.name,
@@ -36,13 +37,18 @@ class InputField extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        if ((nextProps.value != nextState.value))
-            this.setState({ value: nextProps.value })
+        if (nextProps.value) {
+            if ((nextProps.value != nextState.value))
+                this.setState({ currentValue: nextProps.value })
+        }
+        else {
+
+        }
     }
 
     _onChange = (event) => {
         this.setState({
-            value: event.target.value,
+            currentValue: event.target.value,
         })
         if (this.props.onChange) this.props.onChange(event)
     }
@@ -72,8 +78,8 @@ class InputField extends Component {
                     <div className={(onFocus || onActive) ? 'ch-label-outlined-top active' : 'ch-label-outlined-top'} />
                     <div className={(() => {
                         var result = 'ch-label-outlined '
-                        if (onFocus) result = result + 'focus ';
-                        if (onActive) result = result + 'active ';
+                        if (onFocus) result += 'focus ';
+                        if (onActive) result += 'active ';
                         return result;
                     })()}>{label}</div>
                 </div>)
@@ -94,7 +100,7 @@ class InputField extends Component {
             alignItems: 'center',
         }}
         onClick={(event) => {
-            var value = this.state.value;
+            var value = this.state.currentValue;
             value++
             this._onClickBtnSpin(value)
         }}
@@ -125,7 +131,7 @@ class InputField extends Component {
             alignItems: 'center',
         }}
         onClick={(event) => {
-            var value = this.state.value;
+            var value = this.state.currentValue;
             value--
             this._onClickBtnSpin(value)
             //this._onChange(event)
@@ -164,17 +170,17 @@ class InputField extends Component {
     render() {
         const {
             onFocus,
-            value,
+            currentValue,
             label,
             outlined,
             type,
             name } = this.state
-        const onActive = (this.state.value) ? true : false;
+        const onActive = (this.state.currentValue) ? true : false;
 
         return (
             <div style={{}} className={this._classNameCont({ outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
                 {this._label({ outlined, onFocus, onActive, label })}
-                <input ref={this._ref} name={name} value={value} type={type} className={this._classNameInput({ outlined })} onChange={this._onChange} />
+                <input ref={this._ref} name={name} value={currentValue} type={type} className={this._classNameInput({ outlined })} onChange={this._onChange} />
                 {this._spinButtons()}
             </div>
         )

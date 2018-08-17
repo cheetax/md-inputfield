@@ -38,9 +38,13 @@ input.ch-input {
     height: 56px; 
     border-radius: 4px 4px 0 0;
     position: relative;
-    width: 100%;
-    margin: 5px;
+    /* width: 100%; */
+    margin: 10px;
     display: flex;
+    font-family: Segoe UI;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: normal;
 }
 
 .ch-field.outlined {
@@ -99,7 +103,7 @@ input.ch-input-outlined {
     top: 0;
     left: 0;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 400;
     -webkit-transition: .3s;
     -o-transition: .3s;
     transition: .3s;
@@ -168,6 +172,17 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=url] {
     border: none;
     padding: 0;
+}
+*:focus {
+    outline: 0px;
+}
+
+input, textarea{
+    font-family: Segoe UI;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: normal;
+    color: inherit;
 }
 
 .btn-spin:not(input):hover {
