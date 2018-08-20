@@ -47,6 +47,7 @@ input.ch-input {
     bottom: 1;
     width: 100%;
     content: '';
+    border: none;
     border-bottom: 2px solid #4caf50;
     transform: scaleX(0);
     opacity: 0;
