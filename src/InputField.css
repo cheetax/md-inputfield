@@ -44,7 +44,7 @@ input.ch-input {
 .ch-field:not(.outlined) :after {
     position: absolute;
     left: 0;
-    bottom: 1;
+    bottom: 0;
     width: 100%;
     content: '';
     border: none;
@@ -57,7 +57,7 @@ input.ch-input {
 .ch-field:not(.outlined).active:after {
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 1;
     width: 100%;
     content: '';
     opacity: 1;
