@@ -68,7 +68,7 @@ class InputField extends Component {
         return result;
     }
 
-    _classNameInput = ({ outlined }) => (outlined) ? 'ch-input-outlined browser-default' : 'ch-input browser-default'
+    _classNameInput = ({ outlined }) => (outlined) ? 'ch-input outlined browser-default' : 'ch-input browser-default'
 
     _label = ({ outlined, onFocus, onActive, label }) => {
         if (outlined) {
@@ -77,7 +77,7 @@ class InputField extends Component {
                 <div className={(onFocus || onActive) ? 'ch-label-outlined-cont active' : 'ch-label-outlined-cont'} >
                     <div className={(onFocus || onActive) ? 'ch-label-outlined-top active' : 'ch-label-outlined-top'} />
                     <div className={(() => {
-                        var result = 'ch-label-outlined '
+                        var result = 'ch-label outlined '
                         if (onFocus) result += 'focus ';
                         if (onActive) result += 'active ';
                         return result;
@@ -85,7 +85,7 @@ class InputField extends Component {
                 </div>)
         }
         else {
-            return <div className={(onFocus || onActive) ? 'ch-label active' : 'ch-label'}>{label}</div>
+            return <div className={(onFocus || onActive) ? 'ch-label active ' : 'ch-label'}>{label}</div>
         }
     }
 

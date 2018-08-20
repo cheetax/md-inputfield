@@ -24,8 +24,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: "md-inputfield.css",
-      chunkFilename: "md-inputfield.css"
+      filename: "material-inputfield.css",
+      chunkFilename: "material-inputfield.css"
     })
   ],
   module: {

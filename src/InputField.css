@@ -5,28 +5,15 @@ input.ch-input {
     height: 20px;
     margin: 24px 12px auto 12px;
     border: none;
-    width: -webkit-fill-available;
+    width: 100%;
     padding: 0;
     z-index: 99;
     
 }
 
-.ch-label {
-    position: absolute;
-    background: transparent;
-    height: 20px;
-    margin: 20px 12px auto 12px;
-    border: none;
-    /* width: -webkit-fill-available; */
-    padding: 0;
-    top: 0;
-    left: 0;
-    font-size: 14px;
-    font-weight: bold;
-    transition: .3s;
-}
 
-.ch-label.active {
+
+.ch-label:not(.outlined).active {
     color: #4caf50;
     font-size: 12px;
     transform: translateY(-16px) ;
@@ -57,7 +44,7 @@ input.ch-input {
 .ch-field:not(.outlined) :after {
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 1;
     width: 100%;
     content: '';
     border-bottom: 2px solid #4caf50;
@@ -80,23 +67,32 @@ input.ch-input {
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */ 
 
-input.ch-input-outlined {
-    cursor: text;
-    position: relative;
-    background: transparent;
-    height: 20px;
+input.ch-input.outlined {    
     margin: 16px 12px auto 14px;
-    border: none;
-    width: 100%;
-    padding: 0;
-    z-index: 99;
 }
 
-.ch-label-outlined {
-    /* position: absolute; */
+.ch-label.outlined {
+    position: relative;
+    /* background: transparent;
+    height: 20px; */
+    margin: 16px 4px auto 4px;
+    /* border: none; */
+    /* width: -webkit-fill-available; */
+    /* padding: 0;
+    top: 0;
+    left: 0;
+    font-size: 14px;
+    font-weight: 400;
+    -webkit-transition: .3s;
+    -o-transition: .3s; */
+    /* transition: .3s; */
+}
+
+.ch-label {
+    position: absolute;
     background: transparent;
     height: 20px;
-    margin: 16px 4px auto 4px;
+    margin: 20px 12px auto 12px;
     border: none;
     /* width: -webkit-fill-available; */
     padding: 0;
@@ -104,11 +100,10 @@ input.ch-input-outlined {
     left: 0;
     font-size: 14px;
     font-weight: 400;
-    -webkit-transition: .3s;
-    -o-transition: .3s;
     transition: .3s;
 }
-.ch-label-outlined.focus {
+
+.ch-label.outlined.focus {
     margin: 15px 4px auto 3px;
     color: #4caf50;
     font-size: 12px;
@@ -127,13 +122,13 @@ input.ch-input-outlined {
     justify-content: center;
 }
 
-.ch-label-outlined:not(.focus).active {    
+.ch-label.outlined:not(.focus).active {    
     font-size: 12px;
     transform: translateY(-26px) ;
     transition: transform, font-size, margin .3s
 }
 
-.ch-field.outlined.focus {
+.ch-field.focus {
     border: 2px solid;
     padding: 0;
     color: #4caf50;
@@ -163,13 +158,18 @@ input.ch-input-outlined {
     transition: .3s
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
+input.ch-input::-webkit-inner-spin-button, 
+input.ch-input::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
+
+}
+input.ch-input::-ms-clear {
+    display: none; 
+    margin: 0; 
 }
 
-input[type=url] {
+input.ch-input {
     border: none;
     padding: 0;
 }
@@ -177,7 +177,7 @@ input[type=url] {
     outline: 0px;
 }
 
-input, textarea{
+input.ch-input, textarea.ch-input{
     font-family: Segoe UI;
     font-size: 16px;
     line-height: 1.5;
@@ -215,6 +215,7 @@ input.btn-spin {
     height: 100%;
     background: transparent;
     z-index: 99;
+    
     border: none;
 }
 
@@ -226,6 +227,6 @@ div.btn-spin {
     user-select: none;
     position: relative;
     background: transparent;
-    
+    border: 2px solid transparent;    
     z-index: 99;
 }
