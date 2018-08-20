@@ -129,7 +129,7 @@ input.ch-input.outlined {
     transition: transform, font-size, margin .3s
 }
 
-.ch-field.focus {
+.ch-field.outlined.focus {
     border: 2px solid;
     padding: 0;
     color: #4caf50;
