@@ -7,17 +7,7 @@ input.ch-input {
     border: none;
     width: 100%;
     padding: 0;
-    z-index: 99;
-    
-}
-
-
-
-.ch-label:not(.outlined).active {
-    color: #4caf50;
-    font-size: 12px;
-    transform: translateY(-16px) ;
-    transition: .3s
+    z-index: 99;   
 }
 
 .ch-field {
@@ -32,6 +22,7 @@ input.ch-input {
     font-size: 16px;
     line-height: 1.5;
     font-weight: normal;
+    padding: 1px;
 }
 
 .ch-field.outlined {
@@ -40,30 +31,38 @@ input.ch-input {
     border: 1px solid #ddd;
 }
 
-
-.ch-field:not(.outlined) :after {
+.ch-field:not(.outlined)::after {
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 0px;
     width: 100%;
     content: '';
-    border: none;
-    border-bottom: 2px solid #4caf50;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    /* border-bottom: initial; */
     transform: scaleX(0);
     opacity: 0;
     transition: opacity .3s, transform 0s .3s;
 }
 
-.ch-field:not(.outlined).active:after {
+.ch-field:not(.outlined):hover::after {
+    border-bottom: 1px solid;
+    opacity: 1;    
+    transform: scaleX(1);
+    transition: transform 0.3s, opacity 0s;
+}
+
+.ch-field:not(.outlined).focus::after {
     position: absolute;
     left: 0;
-    bottom: 1px;
+    bottom: 0px;
     width: 100%;
     content: '';
     opacity: 1;
     border-bottom: 2px solid #4caf50;
     transform: scaleX(1);
-    transition: transform 0.3s;
+    transition: transform 0.3s, opacity 0s, border-bottom 0s;
 }
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */ 
@@ -74,19 +73,7 @@ input.ch-input.outlined {
 
 .ch-label.outlined {
     position: relative;
-    /* background: transparent;
-    height: 20px; */
     margin: 16px 4px auto 4px;
-    /* border: none; */
-    /* width: -webkit-fill-available; */
-    /* padding: 0;
-    top: 0;
-    left: 0;
-    font-size: 14px;
-    font-weight: 400;
-    -webkit-transition: .3s;
-    -o-transition: .3s; */
-    /* transition: .3s; */
 }
 
 .ch-label {
@@ -104,12 +91,19 @@ input.ch-input.outlined {
     transition: .3s;
 }
 
+.ch-label:not(.outlined).active {
+    /* color: #4caf50; */
+    font-size: 12px;
+    transform: translateY(-16px) ;
+    transition: .3s
+}
+
 .ch-label.outlined.focus {
     margin: 15px 4px auto 3px;
     color: #4caf50;
     font-size: 12px;
     transform: translateY(-26px) ;
-    transition-property: transform, font-size;
+    transition-property: transform, font-size, color;
     transition: .3s
 }
 
@@ -129,14 +123,24 @@ input.ch-input.outlined {
     transition: transform, font-size, margin .3s
 }
 
-.ch-field.outlined.focus {
+.ch-field.outlined.focus, .ch-field.outlined.focus:hover {
     border: 2px solid;
-    padding: 0;
-    color: #4caf50;
+    padding: 0px;
     border-color: #4caf50;
     transition: 0.3s;
 }
 
+.ch-field.outlined:hover, .ch-field.outlined.active:not(.focus):hover {
+    border: 1px solid;
+    /* border-color: #4caf50; */
+    transition: 0.3s;
+}
+
+.ch-field.focus {
+    /* padding: 0; */
+    color: #4caf50;
+    transition: 0.3s;
+}
 
 .ch-field.outlined.active:not(.focus) {
     border: 1px solid #ddd;
@@ -146,7 +150,7 @@ input.ch-input.outlined {
 
 .ch-label-outlined-top {
     position: absolute;
-    height: 2px;
+    height: 4px;
     background: #fff;
     top: -2px;
     /* left: 0; */
@@ -183,7 +187,7 @@ input.ch-input, textarea.ch-input{
     font-size: 16px;
     line-height: 1.5;
     font-weight: normal;
-    color: inherit;
+    color: initial;
 }
 
 .btn-spin:not(input):hover {
