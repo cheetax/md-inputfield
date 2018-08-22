@@ -235,3 +235,18 @@ div.btn-spin {
     border: 2px solid transparent;    
     z-index: 99;
 }
+
+.modal-dialog {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #FFFFFF;
+    /* padding: 0; */
+    /* max-height: 70%; */
+    margin: 0 10px;
+    border-radius: 4px;
+    will-change: top, opacity;
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
+    z-index: 1003;
+}

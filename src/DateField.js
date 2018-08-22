@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
-import './DataField.css'
+import { Calendar } from 'ch-calendar';
+import './DateField.css'
+import 'ch-calendar/dist/ch-calendar.css'
 
-class DataField extends Component {
+class DateField extends Component {
 
     constructor(props) {
         super(props)
+        var date = new Date();
         this.state = {
             onFocus: false,
             label: props.label,
-            value: props.value || 0,
-            currentValue: props.value || 0,
+            value: props.value || date,
+            currentValue: props.value || date,
             outlined: props.outlined,
             type: props.type,
             name: props.name,
-            spinButtons: props.spinButtons,
-            elem: null
+            spinButtons: props.onSpinButtons,
+            elem: null,
+            openModalCalendar: false,
         }
-        this._onFocus = this._onFocus.bind(this)
-        this._ref = this._ref.bind(this)
+        // this._onFocus = this._onFocus.bind(this)
+        //this._ref = this._ref.bind(this)
     }
 
     _onFocus = (event) => {
@@ -152,6 +156,35 @@ class DataField extends Component {
         </svg>
     </div>
 
+    _btnCalendar = () => <div style={{ position: 'relative' }} >
+        {this._ModalCalendar()}
+        <div className='btn-spin browser-default'
+            style={{
+                position: 'relative',
+                height: 24,
+                width: 24,
+                margin: 1,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+            onClick={(event) => {
+                this._onClickBtnCalendar();
+                //this._onChange(event)
+            }}
+            onFocus={this._onFocus}
+        >
+            <input
+                type='url'
+                className='btn-spin browser-default'>
+            </input>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
+            </svg>
+
+        </div>
+    </div>
+
     _onClickBtnSpin = (value) => {
         var elem = this.state.elem;
         var evt = new Event('change', { bubbles: true });
@@ -160,12 +193,53 @@ class DataField extends Component {
         if (cancel) this._onChange(evt);
     }
 
+    _onClickBtnCalendar = () => {
+        var openModalCalendar = !this.state.openModalCalendar
+        this.setState({
+            openModalCalendar
+        })
+    }
+
+    _ModalCalendar = () => {
+        var openModal = this.state.openModalCalendar
+        var date = this.state.currentValue;
+        return <div >
+            <div style={openModal ? {
+                position: 'fixed',
+                background: 'black',
+                opacity: '0.0',
+                top: '0px',
+                left: '0px',
+                width: '100%',
+                height: '100%',
+                zIndex: '999',
+            } : null}
+                onClick={() => {
+                    this.setState({ openModalCalendar: false })
+                }} />
+            <div className='modal-dialog' style={openModal ? {
+                display: 'block',
+                opacity: '1',
+                padding: '8px 0px'
+            } : null} >
+                <Calendar date={date} onSelect={(date) => {
+                    this.setState({ currentValue: date })
+                    console.log(date)
+                }} />
+
+            </div>
+        </div>
+    }
+
     _ref = (elem) => this.setState({ elem })
 
-    _spinButtons = () => (this.state.spinButtons) ? <div style={{ margin: 'auto 8px', display: 'flex' }} >
+    _spinButtons = () => (this.state.onSpinButtons) ? <div style={{ margin: 'auto 8px', display: 'flex' }} >
+        {this._btnCalendar()}
         {this._btn_spin_out()}
         {this._btn_spin_in()}
-    </div> : null
+    </div> : <div style={{ margin: 'auto 8px', display: 'flex' }} >
+            {this._btnCalendar()}
+        </div>
 
     render() {
         const {
@@ -186,4 +260,4 @@ class DataField extends Component {
         )
     }
 }
-export default DataField;
+export default DateField;
