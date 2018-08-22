@@ -13,7 +13,7 @@ class NumberField extends Component {
             outlined: props.outlined,
             type: props.type,
             name: props.name,
-            spinButtons: props.spinButtons,
+            spinButtons: props.onSpinButtons,
             elem: null
         }
         this._onFocus = this._onFocus.bind(this)

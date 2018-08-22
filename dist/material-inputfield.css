@@ -427,6 +427,22 @@ input.ch-input, textarea.ch-input{
     color: initial;
 }
 
+
+
+.modal-dialog {
+    /* display: none; */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #FFFFFF;
+    /* padding: 0; */
+    /* max-height: 70%; */
+    margin: 0 10px;
+    border-radius: 4px;
+    will-change: top, opacity;
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
+    z-index: 1003;
+}
 .btn-spin:not(input):hover {
     cursor: pointer;
     border: 2px solid #adb0b2; 
@@ -462,7 +478,9 @@ input.btn-spin {
 }
 
 div.btn-spin {
-    cursor: pointer;    
+    cursor: pointer;        
+    height: 36px;
+    width: 36px;
     transition: all ease 0.3s;
     border-radius: 50%;
     border-color: transparent;
@@ -471,21 +489,10 @@ div.btn-spin {
     background: transparent;
     border: 2px solid transparent;    
     z-index: 99;
-}
-
-.modal-dialog {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: #FFFFFF;
-    /* padding: 0; */
-    /* max-height: 70%; */
-    margin: 0 10px;
-    border-radius: 4px;
-    will-change: top, opacity;
-    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
-    z-index: 1003;
+    margin: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .calendar-flex-row {
     display: flex;
