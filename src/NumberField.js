@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './InputField.css'
+import './NumberField.css'
 
-class InputField extends Component {
+class NumberField extends Component {
 
     constructor(props) {
         super(props)
@@ -186,4 +186,4 @@ class InputField extends Component {
         )
     }
 }
-export default InputField;
+export default NumberField;

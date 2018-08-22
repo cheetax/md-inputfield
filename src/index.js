@@ -1,3 +1,7 @@
-import InputField from "./InputField";
+import NumberField from "./NumberField";
+import DataField from "./DataField";
 
-export default InputField;
+export {
+    NumberField,
+    DataField,
+};
