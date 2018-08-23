@@ -12,12 +12,13 @@ class DateField extends Component {
 
     constructor(props) {
         super(props)
-        var date = new Date();
+        var date = moment().startOf('day');
+        console.log(date)
         this.state = {
             onFocus: false,
             label: props.label,
-            value: props.value || date,
-            currentValue: props.value.toLocaleDateString() || date,
+            value: moment(props.value).startOf('day') || date,
+            currentValue: moment(props.value).format('DD-MM-YYYY') || date.format('DD-MM-YYYY'),
             date,
             outlined: props.outlined,
             type: props.type,
@@ -47,10 +48,13 @@ class DateField extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        console.log(nextProps.value+ ' ' + this.state.value)
+        //console.log(nextProps.value+ ' ' + this.state.value)
+        
         if (nextProps.value) {
-            if ((nextProps.value !== this.state.value))
-                this.setState({ currentValue: nextProps.value })
+            var value = moment(nextProps.value).startOf('day');
+            console.log(moment(value).isSame(this.state.value))
+            if (!moment(value).isSame(this.state.value))
+                this.setState({ value })
         }
         else {
 
@@ -60,16 +64,19 @@ class DateField extends Component {
     _onChange = (event) => {
         var value = event.target.value;
         var date = this.state.date
-        console.log(date);
-        if (value.indexOf('_') === -1) {
-            date = new Date(moment(value,'DD-MM-YYYY'));
-            //console.log(date);            
+        //console.log(date);
+        if (moment(value,'DD-MM-YYYY').isValid()) {
+            date = moment(value,'DD-MM-YYYY');
+            event.target.value = new Date(date);
+            if (this.props.onChange) this.props.onChange(event)
+            //value = date;
+            console.log(value);            
         }
         this.setState({
             currentValue: value,
             date
         })
-        if (this.props.onChange) this.props.onChange(event)
+        
     }
 
     _classNameCont = ({ outlined, onFocus, onActive }) => {
