@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { Calendar } from 'ch-calendar';
+import InputMask from 'react-input-mask';
+import moment from 'moment'
+import 'moment/locale/ru'
 import './DateField.css'
 import './btnSpin.css'
 import 'ch-calendar/dist/ch-calendar.css'
+moment.locale('ru')
 
 class DateField extends Component {
 
@@ -13,7 +17,8 @@ class DateField extends Component {
             onFocus: false,
             label: props.label,
             value: props.value || date,
-            currentValue: props.value || date,
+            currentValue: props.value.toLocaleDateString() || date,
+            date,
             outlined: props.outlined,
             type: props.type,
             name: props.name,
@@ -53,8 +58,15 @@ class DateField extends Component {
 
     _onChange = (event) => {
         var value = event.target.value;
+        var date = this.state.date
+        //console.log(typeof(value));
+        if (value.indexOf('_') === -1) {
+            date = new Date(moment(value,'DD-MM-YYYY'));
+            //console.log(date);            
+        }
         this.setState({
             currentValue: value,
+            date
         })
         if (this.props.onChange) this.props.onChange(event)
     }
@@ -97,9 +109,9 @@ class DateField extends Component {
 
     _btn_spin_in = () => <div className='btn-spin browser-default'
         onClick={(event) => {
-            var value = this.state.currentValue;
-            value++
-            this._onClickBtnSpin(value)
+            var value = this.state.date;
+            value = moment(value).add(1, 'day');            
+            this._onClickBtnSpin(value.format('DD-MM-YYYY'))
         }}
         onFocus={this._onFocus}
     >
@@ -119,9 +131,9 @@ class DateField extends Component {
 
     _btn_spin_out = () => <div className='btn-spin browser-default'
         onClick={(event) => {
-            var value = this.state.currentValue;
-            value--
-            this._onClickBtnSpin(value)
+            var value = this.state.date;
+            value = moment(value).add(-1, 'day');
+            this._onClickBtnSpin(value.format('DD-MM-YYYY'))
             //this._onChange(event)
         }}
         onFocus={this._onFocus}
@@ -139,14 +151,13 @@ class DateField extends Component {
         </svg>
     </div>
 
-    _btnCalendar = () => <div style={{ position: 'relative' }} >
+    _btnCalendar = () => <div style={{ position: 'relative', color: 'initial' }} >
         {this._ModalCalendar()}
         <div className='btn-spin browser-default'
             onClick={(event) => {
                 this._onClickBtnCalendar();
                 //this._onChange(event)
             }}
-            onFocus={this._onFocus}
         >
             <input
                 type='url'
@@ -172,23 +183,37 @@ class DateField extends Component {
     }
 
     _onClickBtnCalendar = () => {
-        var openModalCalendar = !this.state.openModalCalendar
+        var openModalCalendar = !this.state.openModalCalendar;
+
         this.setState({
             openModalCalendar
         })
     }
 
+    _onSelectCalendar = (date) => {
+        var currentValue = moment(date).format('DD-MM-YYYY');
+        var elem = this.state.elem;
+        this.setState({
+            openModalCalendar: false,
+            date,
+            currentValue,
+        })
+        this._onClickBtnSpin(currentValue);
+        elem.focus();
+        //console.log(date)
+    }
+
     _ModalCalendar = () => {
         var openModal = this.state.openModalCalendar
-        var date = this.state.currentValue;
-        console.log(openModal)
+        var date = this.state.date;
+        //console.log(date)
         return <div >
             <div style={openModal ? {
                 position: 'fixed',
                 background: 'black',
-                opacity: '0.0',
-                top: '100%',
-                left: '0px',
+                opacity: '0',
+                top: '0',
+                left: '0',
                 width: '100%',
                 height: '100%',
                 zIndex: '999',
@@ -201,22 +226,19 @@ class DateField extends Component {
                 opacity: '1',
                 padding: '8px 0px'
             } : {
-                display: 'none',
-                opacity: '1',
-                padding: '8px 0px'
-            }} >
-                <Calendar date={date} onSelect={(date) => {
-                    this.setState({
-                        openModalCalendar: false, 
-                        currentValue: date })
-                    console.log(date)
-                }} />
-
+                    display: 'none',
+                    opacity: '1',
+                    padding: '8px 0px'
+                }} >
+                <Calendar date={date} onSelect={this._onSelectCalendar} />
             </div>
         </div>
     }
 
-    _ref = (elem) => this.setState({ elem })
+    _ref = (elem) => {
+        //elem.mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" })
+        this.setState({ elem })
+    }
 
     _spinButtons = () => (this.state.spinButtons) ? <div style={{ margin: 'auto 8px', display: 'flex' }} >
         {this._btnCalendar()}
@@ -235,11 +257,20 @@ class DateField extends Component {
             type,
             name } = this.state
         const onActive = (this.state.currentValue) ? true : false;
-
+        //console.log(typeof(currentValue))
+        //if (currentValue === typeof())
         return (
             <div style={{}} className={this._classNameCont({ outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
                 {this._label({ outlined, onFocus, onActive, label })}
-                <input ref={this._ref} name={name} value={currentValue.toLocaleDateString()} type='text' className={this._classNameInput({ outlined })} onChange={this._onChange} />
+                {/* <input ref={this._ref} name={name} value={currentValue.toLocaleDateString()} type='text' className={this._classNameInput({ outlined })} onChange={this._onChange} /> */}
+                <InputMask
+                    mask="99-99-9999"
+                    inputRef={this._ref}
+                    name={name}
+                    value={currentValue}
+                    type='text'
+                    className={this._classNameInput({ outlined })}
+                    onChange={this._onChange} />
                 {this._spinButtons()}
             </div>
         )
