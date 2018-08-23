@@ -47,8 +47,9 @@ class DateField extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
+        console.log(nextProps.value+ ' ' + this.state.value)
         if (nextProps.value) {
-            if ((nextProps.value != nextState.value))
+            if ((nextProps.value !== this.state.value))
                 this.setState({ currentValue: nextProps.value })
         }
         else {
@@ -59,7 +60,7 @@ class DateField extends Component {
     _onChange = (event) => {
         var value = event.target.value;
         var date = this.state.date
-        //console.log(typeof(value));
+        console.log(date);
         if (value.indexOf('_') === -1) {
             date = new Date(moment(value,'DD-MM-YYYY'));
             //console.log(date);            
