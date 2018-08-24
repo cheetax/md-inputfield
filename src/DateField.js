@@ -34,11 +34,18 @@ class DateField extends Component {
     _onFocus = (event) => {
         var onFocus = false;
         var elem = this.state.elem;
+        console.log('focus click - ' + event.type)
         switch (event.type) {
             case 'focus':
             case 'click':
                 onFocus = true;
                 elem.focus();
+            case 'blur':
+                if (this.state.openModalCalendar) {
+                    onFocus = true;
+                    elem.focus();
+                }
+
         }
 
         this.setState({
@@ -49,7 +56,7 @@ class DateField extends Component {
 
     componentWillUpdate(nextProps, nextState) {
         //console.log(nextProps.value+ ' ' + this.state.value)
-        
+
         if (nextProps.value) {
             var value = moment(nextProps.value).startOf('day');
             console.log(moment(value).isSame(this.state.value))
@@ -64,19 +71,20 @@ class DateField extends Component {
     _onChange = (event) => {
         var value = event.target.value;
         var date = this.state.date
-        //console.log(date);
-        if (moment(value,'DD-MM-YYYY').isValid()) {
-            date = moment(value,'DD-MM-YYYY');
-            event.target.value = new Date(date);
-            if (this.props.onChange) this.props.onChange(event)
-            //value = date;
-            console.log(value);            
+        console.log(value);
+        if (moment(value, 'DD-MM-YYYY').isValid()) {
+            date = moment(value, 'DD-MM-YYYY');
         }
+        else {
+            date = moment('01-01-1970');
+        }
+        event.target.value = new Date(date);
+        console.log(value);
+        if (this.props.onChange) this.props.onChange(event)
         this.setState({
             currentValue: value,
             date
         })
-        
     }
 
     _classNameCont = ({ outlined, onFocus, onActive }) => {
@@ -118,7 +126,7 @@ class DateField extends Component {
     _btn_spin_in = () => <div className='btn-spin browser-default'
         onClick={(event) => {
             var value = this.state.date;
-            value = moment(value).add(1, 'day');            
+            value = moment(value).add(1, 'day');
             this._onClickBtnSpin(value.format('DD-MM-YYYY'))
         }}
         onFocus={this._onFocus}
@@ -176,7 +184,7 @@ class DateField extends Component {
                 height="24"
                 viewBox="0 0 24 24"
                 style={{ position: 'absolute', fill: '#013a81' }}>
-                <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
+                <path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z" />
             </svg>
 
         </div>
@@ -187,7 +195,8 @@ class DateField extends Component {
         var evt = new Event('change', { bubbles: true });
         elem.value = value;
         var cancel = elem.dispatchEvent(evt);
-        if (cancel) this._onChange(evt);
+        console.log('calendar - ' + value)
+        if (cancel) console.log('Spin - ' + value); this._onChange(evt);
     }
 
     _onClickBtnCalendar = () => {
@@ -203,12 +212,12 @@ class DateField extends Component {
         var elem = this.state.elem;
         this.setState({
             openModalCalendar: false,
-            date,
+            date: moment(date),
             currentValue,
         })
         this._onClickBtnSpin(currentValue);
         elem.focus();
-        //console.log(date)
+
     }
 
     _ModalCalendar = () => {
@@ -265,7 +274,7 @@ class DateField extends Component {
             type,
             name } = this.state
         const onActive = (this.state.currentValue) ? true : false;
-        //console.log(typeof(currentValue))
+        console.log('render - ' + currentValue)
         //if (currentValue === typeof())
         return (
             <div style={{}} className={this._classNameCont({ outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
@@ -278,7 +287,10 @@ class DateField extends Component {
                     value={currentValue}
                     type='text'
                     className={this._classNameInput({ outlined })}
-                    onChange={this._onChange} />
+                    onChange={(event) => {
+                        console.log('event - ' + event.target.value)
+                        return this._onChange(event)
+                    }} />
                 {this._spinButtons()}
             </div>
         )
