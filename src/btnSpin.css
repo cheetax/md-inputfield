@@ -34,8 +34,8 @@ input.btn-spin {
 
 div.btn-spin {
     cursor: pointer;        
-    height: 36px;
-    width: 36px;
+    height: 32px;
+    width: 32px;
     transition: all ease 0.3s;
     border-radius: 50%;
     border-color: transparent;

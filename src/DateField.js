@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
 import { Calendar } from 'ch-calendar';
+import 'ch-calendar/dist/ch-calendar.css';
+import moment from 'moment';
+import 'moment/locale/ru';
+import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
-import moment from 'moment'
-import 'moment/locale/ru'
-import './DateField.css'
-import './btnSpin.css'
-import 'ch-calendar/dist/ch-calendar.css'
+import './btnSpin.css';
+import './DateField.css';
 moment.locale('ru')
 
 class DateField extends Component {
@@ -13,7 +13,7 @@ class DateField extends Component {
     constructor(props) {
         super(props)
         var date = moment().startOf('day');
-        console.log(date)
+        //console.log(date)
         this.state = {
             onFocus: false,
             label: props.label,
@@ -34,7 +34,7 @@ class DateField extends Component {
     _onFocus = (event) => {
         var onFocus = false;
         var elem = this.state.elem;
-        console.log('focus click - ' + event.type)
+        //console.log('focus click - ' + event.type)
         switch (event.type) {
             case 'focus':
             case 'click':
@@ -59,7 +59,7 @@ class DateField extends Component {
 
         if (nextProps.value) {
             var value = moment(nextProps.value).startOf('day');
-            console.log(moment(value).isSame(this.state.value))
+            //console.log(moment(value).isSame(this.state.value))
             if (!moment(value).isSame(this.state.value))
                 this.setState({ value })
         }
@@ -71,7 +71,7 @@ class DateField extends Component {
     _onChange = (event) => {
         var value = event.target.value;
         var date = this.state.date
-        console.log(value);
+        //console.log(value);
         if (moment(value, 'DD-MM-YYYY').isValid()) {
             date = moment(value, 'DD-MM-YYYY');
         }
@@ -79,7 +79,7 @@ class DateField extends Component {
             date = moment('01-01-1970');
         }
         event.target.value = new Date(date);
-        console.log(value);
+        //console.log(value);
         if (this.props.onChange) this.props.onChange(event)
         this.setState({
             currentValue: value,
@@ -195,8 +195,8 @@ class DateField extends Component {
         var evt = new Event('change', { bubbles: true });
         elem.value = value;
         var cancel = elem.dispatchEvent(evt);
-        console.log('calendar - ' + value)
-        if (cancel) console.log('Spin - ' + value); this._onChange(evt);
+        //console.log('calendar - ' + value)
+        if (cancel) this._onChange(evt);
     }
 
     _onClickBtnCalendar = () => {
@@ -274,7 +274,7 @@ class DateField extends Component {
             type,
             name } = this.state
         const onActive = (this.state.currentValue) ? true : false;
-        console.log('render - ' + currentValue)
+        //console.log('render - ' + currentValue)
         //if (currentValue === typeof())
         return (
             <div style={{}} className={this._classNameCont({ outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
@@ -288,7 +288,7 @@ class DateField extends Component {
                     type='text'
                     className={this._classNameInput({ outlined })}
                     onChange={(event) => {
-                        console.log('event - ' + event.target.value)
+                        //console.log('event - ' + event.target.value)
                         return this._onChange(event)
                     }} />
                 {this._spinButtons()}

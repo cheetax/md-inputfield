@@ -235,6 +235,169 @@ div.btn-spin {
     border: 2px solid transparent;    
     z-index: 99;
 }
+.calendar-flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.calendar-flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-select-day.active:hover, .btn-select-day:hover, .btn-select-day.current:hover,  .btn-select:hover  {
+    cursor: pointer;
+    border: 2px solid #adb0b2; 
+}
+
+.btn-select-day.active:hover {
+    cursor: pointer;
+    border: 2px solid #02d86d; 
+}
+
+.btn-select-day:active, .btn-select:active {
+    /* border: 2px solid red; */
+    background: #adb0b2;
+}
+
+a.btn-select-day {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    user-select: none;
+}
+
+.no-current-month.btn-select-day {
+    color: #90c4de;
+}
+
+a.btn-select {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 16px;
+    border: 2px solid transparent;
+    user-select: none;
+}
+
+.btn-select-day.active {
+    border: 2px solid #00b259; 
+}
+.btn-select-day.current {
+    border: 2px solid #d0e8f5;
+}
+
+.icon-down-arrow {
+    transition:  0.3s;
+    fill: #013a81;
+}
+
+.icon-svg {
+    fill: #013a81;
+}
+
+.icon-down-arrow.dropdown-active{
+    transform: rotate(-180deg);
+    transition:  0.3s;
+}
+
+.select-month {
+    transition: .3s;
+}
+
+.not-year {
+    position: relative;
+    /* transform: translateX(100%); */
+    width: auto;
+    max-width: 0;
+    transition: .3s;
+    overflow: hidden;
+}
+.select-year {
+    position: relative;
+    right: 0;
+    width: auto;
+    max-width: 100%;
+    transition: .3s;
+    overflow: hidden;
+}
+
+.on-select-day {
+    height: auto;
+    transform: translateY(-100%);
+    /* max-height: 100%; */
+    transition: .3s;
+}
+
+.off-select-day {
+    height: auto;
+    transform: translateY(0%);
+    transition: .3s;
+}
+
+.on-select-month {
+    height: auto;
+    transform: translateY(0%);
+    transition: .3s;
+}
+
+.off-select-month {
+    height: auto;
+    transform: translateY(-100%);
+    transition: .3s;
+}
+
+.btn-spin:not(input):hover {
+    cursor: pointer;
+    border: 2px solid #adb0b2; 
+}
+/* .btn-spin.hover {
+    cursor: pointer;
+    border: 2px solid #4caf50; 
+
+} */
+
+.btn-spin:not(input):active {
+    /* border: 2px solid red; */
+    background: #adb0b2;
+}
+
+a.btn-spin {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+}
+input.btn-spin {
+    cursor: pointer;  
+    user-select: none;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 99;
+    
+    border: none;
+}
+
+div.btn-spin {
+    cursor: pointer;        
+    height: 32px;
+    width: 32px;
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+    position: relative;
+    background: transparent;
+    border: 2px solid transparent;    
+    z-index: 99;
+    margin: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 input.ch-input-data {
     cursor: text;
     position: relative;
@@ -443,226 +606,3 @@ input.ch-input, textarea.ch-input{
     box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
     z-index: 1003;
 }
-.btn-spin:not(input):hover {
-    cursor: pointer;
-    border: 2px solid #adb0b2; 
-}
-/* .btn-spin.hover {
-    cursor: pointer;
-    border: 2px solid #4caf50; 
-
-} */
-
-.btn-spin:not(input):active {
-    /* border: 2px solid red; */
-    background: #adb0b2;
-}
-
-a.btn-spin {
-    cursor: pointer;    
-    transition: all ease 0.3s;
-    border-radius: 50%;
-    border-color: transparent;
-    user-select: none;
-}
-input.btn-spin {
-    cursor: pointer;  
-    user-select: none;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    z-index: 99;
-    
-    border: none;
-}
-
-div.btn-spin {
-    cursor: pointer;        
-    height: 36px;
-    width: 36px;
-    transition: all ease 0.3s;
-    border-radius: 50%;
-    border-color: transparent;
-    user-select: none;
-    position: relative;
-    background: transparent;
-    border: 2px solid transparent;    
-    z-index: 99;
-    margin: 1px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.calendar-flex-row {
-    display: flex;
-    flex-direction: row;
-}
-
-.calendar-flex-column {
-    display: flex;
-    flex-direction: column;
-}
-
-.btn-select-day.active:hover, .btn-select-day:hover, .btn-select-day.current:hover,  .btn-select:hover  {
-    cursor: pointer;
-    border: 2px solid #adb0b2; 
-}
-
-.btn-select-day.active:hover {
-    cursor: pointer;
-    border: 2px solid #02d86d; 
-}
-
-.btn-select-day:active, .btn-select:active {
-    /* border: 2px solid red; */
-    background: #adb0b2;
-}
-
-a.btn-select-day {
-    cursor: pointer;    
-    transition: all ease 0.3s;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    user-select: none;
-}
-
-.no-current-month.btn-select-day {
-    color: #90c4de;
-}
-
-a.btn-select {
-    cursor: pointer;    
-    transition: all ease 0.3s;
-    border-radius: 16px;
-    border: 2px solid transparent;
-    user-select: none;
-}
-
-.btn-select-day.active {
-    border: 2px solid #00b259; 
-}
-.btn-select-day.current {
-    border: 2px solid #d0e8f5;
-}
-
-.icon-down-arrow {
-    transition:  0.3s;
-    fill: #013a81;
-}
-
-.icon-svg {
-    fill: #013a81;
-}
-
-.icon-down-arrow.dropdown-active{
-    transform: rotate(-180deg);
-    transition:  0.3s;
-}
-
-.modal-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    /* width: 112px; */
-    background: #FFFFFF;
-    /* padding: 0; */
-    /* max-height: 70%; */
-    /* margin: 0 10px; */
-    border-radius: 4px;
-    will-change: top, opacity;
-    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
-    z-index: 1003;
-}
-
-.dropdown-menu {
-    /* display: flex;
-    flex-direction: column; */
-    padding: 0px 0px;
-}
-
-.dropdown-item {
-    height: 32px;
-    /* color: black; */
-    /* font-weight: normal; */
-    flex: auto;
-    padding: 0 16px;
-    /* font-size: 16px; */
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.dropdown-item:hover {
-    background-color:  rgba(0,0,0,0.1);
-}
-
-.select-month {
-    transition: .3s;
-}
-
-.not-year {
-    position: relative;
-    /* transform: translateX(100%); */
-    width: auto;
-    max-width: 0;
-    transition: .3s;
-    overflow: hidden;
-}
-.select-year {
-    position: relative;
-    right: 0;
-    width: auto;
-    max-width: 100%;
-    transition: .3s;
-    overflow: hidden;
-}
-
-.test {
-    position: relative;
-    transition: 1s;
-}
-
-.test:hover {    
-    position: relative;
-    /* right: -100%; */
-    /* transform: translateX(100%); */
-    transition: 1s;
-}
-.test2{
-    margin-left: auto;
-    width: inherit;
-    transition: 1s;
-    right: 0;
-}
-.test2:hover {
-    width: 0px;
-    transition: 1s;
-}
-
-.on-select-day {
-    height: auto;
-    transform: translateY(-100%);
-    /* max-height: 100%; */
-    transition: .3s;
-}
-
-.off-select-day {
-    height: auto;
-    transform: translateY(0%);
-    transition: .3s;
-}
-
-.on-select-month {
-    height: auto;
-    transform: translateY(0%);
-    transition: .3s;
-}
-
-.off-select-month {
-    height: auto;
-    transform: translateY(-100%);
-    transition: .3s;
-}
-
