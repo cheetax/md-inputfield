@@ -5,20 +5,19 @@ import 'moment/locale/ru';
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
 import './btnSpin.css';
-import './DateField.css';
+import './MonthField.css';
 moment.locale('ru')
 
-class DateField extends Component {
+class MonthField extends Component {
 
     constructor(props) {
         super(props)
-        var date = moment().startOf('day');
+        var date = moment().startOf('month');
         //console.log(date)
         this.state = {
             onFocus: false,
             label: props.label,
-            value: moment(props.value).startOf('day') || date,
-            currentValue: moment(props.value).format('DD-MM-YYYY') || date.format('DD-MM-YYYY'),
+            value: moment(props.value).startOf('month') || date,
             date,
             outlined: props.outlined,
             type: props.type,
@@ -58,7 +57,7 @@ class DateField extends Component {
         //console.log(nextProps.value+ ' ' + this.state.value)
 
         if (nextProps.value) {
-            var value = moment(nextProps.value).startOf('day');
+            var value = moment(nextProps.value).startOf('month');
             //console.log(moment(value).isSame(this.state.value))
             if (!moment(value).isSame(this.state.value))
                 this.setState({ value })
@@ -73,26 +72,26 @@ class DateField extends Component {
         var date = this.state.date
         //console.log(value);
         if (moment(value, 'DD-MM-YYYY').isValid()) {
-            date = moment(value, 'DD-MM-YYYY');
+            date = moment(value, 'DD-MM-YYYY', 'ru');
         }
         else {
             date = moment('01-01-1970');
         }
-        
         this.setState({
             currentValue: value,
             date
         })
-
+        console.log(date);
         value = {
-            dateFrom: (moment(date).startOf('day').toISOString(true)),
-            dateTo: (moment(date).endOf('day').toISOString(true)),
+            dateFrom: (moment(date, 'ru').startOf('month').toISOString(true)),
+            dateTo: (moment(date, 'ru').endOf('month').toISOString(true)),
         }
         event.target.value = JSON.stringify(value);
         //console.log(value);
 
         if (this.props.onChange) this.props.onChange(event)
         if (this.props.onChangeObject) this.props.onChangeObject(value)
+        
     }
 
     _classNameCont = ({ outlined, onFocus, onActive }) => {
@@ -134,7 +133,7 @@ class DateField extends Component {
     _btn_spin_in = () => <div className='btn-spin browser-default'
         onClick={(event) => {
             var value = this.state.date;
-            value = moment(value).add(1, 'day');
+            value = moment(value).add(1, 'month');
             this._onClickBtnSpin(value.format('DD-MM-YYYY'))
         }}
         onFocus={this._onFocus}
@@ -156,7 +155,7 @@ class DateField extends Component {
     _btn_spin_out = () => <div className='btn-spin browser-default'
         onClick={(event) => {
             var value = this.state.date;
-            value = moment(value).add(-1, 'day');
+            value = moment(value).add(-1, 'month');
             this._onClickBtnSpin(value.format('DD-MM-YYYY'))
             //this._onChange(event)
         }}
@@ -255,7 +254,7 @@ class DateField extends Component {
                     opacity: '1',
                     padding: '8px 0px'
                 }} >
-                <Calendar date={date} onSelect={this._onSelectCalendar} />
+                <Calendar isMonth date={date} onSelect={this._onSelectCalendar} />
             </div>
         </div>
     }
@@ -276,32 +275,31 @@ class DateField extends Component {
     render() {
         const {
             onFocus,
-            currentValue,
             label,
             outlined,
+            date,
             type,
             name } = this.state
-        const onActive = (this.state.currentValue) ? true : false;
+        const currentValue = moment(date).format('MMMM YYYY')
+        const onActive = (this.state.date) ? true : false;
+
         //console.log('render - ' + currentValue)
         //if (currentValue === typeof())
         return (
             <div style={{}} className={this._classNameCont({ outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
                 {this._label({ outlined, onFocus, onActive, label })}
                 {/* <input ref={this._ref} name={name} value={currentValue.toLocaleDateString()} type='text' className={this._classNameInput({ outlined })} onChange={this._onChange} /> */}
-                <InputMask                    
-                    mask="99-99-9999"
+                <InputMask
+                    readOnly
                     inputRef={this._ref}
                     name={name}
                     value={currentValue}
                     type='text'
                     className={this._classNameInput({ outlined })}
-                    onChange={(event) => {
-                        //console.log('event - ' + event.target.value)
-                        return this._onChange(event)
-                    }} />
+                    />
                 {this._spinButtons()}
             </div>
         )
     }
 }
-export default DateField;
+export default MonthField;
