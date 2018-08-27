@@ -71,7 +71,6 @@ class DateField extends Component {
     _onChange = (event) => {
         var value = event.target.value;
         var date = this.state.date
-        //console.log(value);
         if (moment(value, 'DD-MM-YYYY').isValid()) {
             date = moment(value, 'DD-MM-YYYY');
         }
@@ -89,7 +88,6 @@ class DateField extends Component {
             dateTo: (moment(date).endOf('day').toISOString(true)),
         }
         event.target.value = JSON.stringify(value);
-        //console.log(value);
 
         if (this.props.onChange) this.props.onChange(event)
         if (this.props.onChangeObject) this.props.onChangeObject(value)
