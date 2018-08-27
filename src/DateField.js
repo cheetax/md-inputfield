@@ -90,7 +90,7 @@ class DateField extends Component {
         event.target.value = JSON.stringify(value);
 
         if (this.props.onChange) this.props.onChange(event)
-        if (this.props.onChangeObject) this.props.onChangeObject(value)
+        if (this.props.onChangeObject) this.props.onChangeObject(value) 
     }
 
     _classNameCont = ({ outlined, onFocus, onActive }) => {
