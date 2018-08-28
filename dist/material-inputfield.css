@@ -53,6 +53,13 @@ input.ch-input {
     transition: transform 0.3s, opacity 0s;
 }
 
+.ch-field:not(.outlined).focus:hover::after {
+    border-bottom: 2px solid;
+    opacity: 0;    
+    transform: scaleX(0);
+    transition: transform 0s, opacity 0s;
+}
+
 .ch-field:not(.outlined).focus::after {
     position: absolute;
     left: 0;
