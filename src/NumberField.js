@@ -9,7 +9,7 @@ class NumberField extends Component {
             onFocus: false,
             label: props.label,
             value: props.value || 0,
-            currentValue: props.value || 0,
+            currentValue: props.value || '',
             outlined: props.outlined,
             type: props.type,
             name: props.name,
@@ -175,7 +175,7 @@ class NumberField extends Component {
             outlined,
             type,
             name } = this.state
-        const onActive = (this.state.currentValue) ? true : false;
+        const onActive = (this.state.currentValue !=='') ? true : false;
 
         return (
             <div style={{}} className={this._classNameCont({ outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
