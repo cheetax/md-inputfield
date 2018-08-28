@@ -9,7 +9,7 @@ class NumberField extends Component {
             onFocus: false,
             label: props.label,
             value: props.value || 0,
-            currentValue: props.value || '',
+            currentValue: (props.value !== undefined) ? props.value : '',
             outlined: props.outlined,
             type: props.type,
             name: props.name,
