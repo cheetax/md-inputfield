@@ -24,7 +24,8 @@ class MonthField extends Component {
             name: props.name,
             spinButtons: props.onSpinButtons,
             elem: null,
-            openModalCalendar: false,
+            openModalCalendar: false,            
+            onCalendarButton: props.onCalendarButton,
         }
         // this._onFocus = this._onFocus.bind(this)
         //this._ref = this._ref.bind(this)
@@ -39,11 +40,13 @@ class MonthField extends Component {
             case 'click':
                 onFocus = true;
                 elem.focus();
+                break;
             case 'blur':
                 if (this.state.openModalCalendar) {
                     onFocus = true;
                     elem.focus();
                 }
+                break;
 
         }
 
@@ -91,7 +94,7 @@ class MonthField extends Component {
 
         if (this.props.onChange) this.props.onChange(event)
         if (this.props.onChangeObject) this.props.onChangeObject(value)
-        
+
     }
 
     _classNameCont = ({ outlined, onFocus, onActive }) => {
@@ -174,7 +177,7 @@ class MonthField extends Component {
         </svg>
     </div>
 
-    _btnCalendar = () => <div style={{ position: 'relative', color: 'initial' }} >
+    _btnCalendar = () => ((this.state.onCalendarButton) ? <div style={{ position: 'relative', color: 'initial' }} >
         {this._ModalCalendar()}
         <div className='btn-spin browser-default'
             onClick={(event) => {
@@ -195,7 +198,7 @@ class MonthField extends Component {
             </svg>
 
         </div>
-    </div>
+    </div> : null )
 
     _onClickBtnSpin = (value) => {
         var elem = this.state.elem;
@@ -264,13 +267,10 @@ class MonthField extends Component {
         this.setState({ elem })
     }
 
-    _spinButtons = () => (this.state.spinButtons) ? <div style={{ margin: 'auto 8px', display: 'flex' }} >
-        {this._btnCalendar()}
+    _spinButtons = (() => (this.state.spinButtons) ? <div style={{ display: 'flex' }} >
         {this._btn_spin_out()}
         {this._btn_spin_in()}
-    </div> : <div style={{ margin: 'auto 8px', display: 'flex' }} >
-            {this._btnCalendar()}
-        </div>
+    </div> : null)
 
     render() {
         const {
@@ -296,8 +296,11 @@ class MonthField extends Component {
                     value={currentValue}
                     type='text'
                     className={this._classNameInput({ outlined })}
-                    />
-                {this._spinButtons()}
+                />
+                <div style={{ margin: 'auto 8px', display: 'flex' }} >
+                    {this._btnCalendar()}
+                    {this._spinButtons()}
+                </div>
             </div>
         )
     }

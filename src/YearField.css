@@ -1,0 +1,208 @@
+div.ch-input-data {
+    cursor: text;
+    position: relative;
+    background: transparent;
+    height: 20px;
+    margin: 24px 12px auto 12px;
+    border: none;
+    width: 100%;
+    padding: 0;
+    z-index: 99;   
+}
+
+.ch-field {
+    background-color: #ddd;
+    height: 56px; 
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    /* width: 100%; */
+    margin: 10px;
+    display: flex;
+    font-family: Segoe UI;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: normal;
+    padding: 1px;
+}
+
+.ch-field.outlined {
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.ch-field:not(.outlined)::after {
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    content: '';
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    /* border-bottom: initial; */
+    transform: scaleX(0);
+    opacity: 0;
+    transition: opacity .3s, transform 0s .3s;
+}
+
+.ch-field:not(.outlined):hover::after {
+    border-bottom: 1px solid;
+    opacity: 1;    
+    transform: scaleX(1);
+    transition: transform 0.3s, opacity 0s;
+}
+
+.ch-field:not(.outlined).focus::after {
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    content: '';
+    opacity: 1;
+    border-bottom: 2px solid #4caf50;
+    transform: scaleX(1);
+    transition: transform 0.3s, opacity 0s, border-bottom 0s;
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */ 
+
+div.ch-input.outlined {    
+    margin: 16px 12px auto 14px;
+}
+
+.ch-label.outlined {
+    position: relative;
+    margin: 16px 4px auto 4px;
+}
+
+.ch-label {
+    position: absolute;
+    background: transparent;
+    height: 20px;
+    margin: 20px 12px auto 12px;
+    border: none;
+    /* width: -webkit-fill-available; */
+    padding: 0;
+    top: 0;
+    left: 0;
+    font-size: 14px;
+    font-weight: 400;
+    transition: .3s;
+}
+
+.ch-label:not(.outlined).active {
+    /* color: #4caf50; */
+    font-size: 12px;
+    transform: translateY(-16px) ;
+    transition: .3s
+}
+
+.ch-label.outlined.focus {
+    margin: 15px 4px auto 3px;
+    color: #4caf50;
+    font-size: 12px;
+    transform: translateY(-26px) ;
+    transition-property: transform, font-size, color;
+    transition: .3s
+}
+
+.ch-label-outlined-cont {
+    position: absolute;
+    background: transparent;
+    top: 0;
+    left: 0;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.ch-label.outlined:not(.focus).active {    
+    font-size: 12px;
+    transform: translateY(-26px) ;
+    transition: transform, font-size, margin .3s
+}
+
+.ch-field.outlined.focus, .ch-field.outlined.focus:hover {
+    border: 2px solid;
+    padding: 0px;
+    border-color: #4caf50;
+    transition: 0.3s;
+}
+
+.ch-field.outlined:hover, .ch-field.outlined.active:not(.focus):hover {
+    border: 1px solid;
+    /* border-color: #4caf50; */
+    transition: 0.3s;
+}
+
+.ch-field.focus {
+    /* padding: 0; */
+    color: #4caf50;
+    transition: 0.3s;
+}
+
+.ch-field.outlined.active:not(.focus) {
+    border: 1px solid #ddd;
+    padding: 1px;
+    transition: 0.3s;
+}
+
+.ch-label-outlined-top {
+    position: absolute;
+    height: 4px;
+    background: #fff;
+    top: -2px;
+    /* left: 0; */
+    width: 0;
+    transition: .3s;
+}
+
+.ch-label-outlined-top.active {
+    width: 100%;
+    transition: .3s
+}
+
+input.ch-input::-webkit-inner-spin-button, 
+input.ch-input::-webkit-outer-spin-button {
+  -webkit-appearance: none; 
+  margin: 0; 
+
+}
+input.ch-input::-ms-clear {
+    display: none; 
+    margin: 0; 
+}
+
+input.ch-input {
+    border: none;
+    padding: 0;
+}
+*:focus {
+    outline: 0px;
+}
+
+input.ch-input, textarea.ch-input{
+    font-family: Segoe UI;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: normal;
+    color: initial;
+}
+
+
+
+.modal-dialog {
+    /* display: none; */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #FFFFFF;
+    /* padding: 0; */
+    /* max-height: 70%; */
+    margin: 0 10px;
+    border-radius: 4px;
+    will-change: top, opacity;
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
+    z-index: 1003;
+}

@@ -39,11 +39,13 @@ class QuarterField extends Component {
             case 'click':
                 onFocus = true;
                 elem.focus();
+                break;
             case 'blur':
                 if (this.state.openModalCalendar) {
                     onFocus = true;
                     elem.focus();
                 }
+                break;
 
         }
 
@@ -57,7 +59,7 @@ class QuarterField extends Component {
         //console.log(nextProps.value+ ' ' + this.state.value)
 
         if (nextProps.value) {
-            var value = moment(nextProps.value).startOf('day');
+            var value = moment(nextProps.value).startOf('quarter');
             //console.log(moment(value).isSame(this.state.value))
             if (!moment(value).isSame(this.state.value))
                 this.setState({ value })
