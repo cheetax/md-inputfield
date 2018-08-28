@@ -1,5 +1,7 @@
 import { Calendar } from 'ch-calendar';
 import 'ch-calendar/dist/ch-calendar.css';
+import BtnSpin from './BtnSpin';
+import { SvgPlus } from './Svg';
 import moment from 'moment';
 import 'moment/locale/ru';
 import React, { Component } from 'react';
@@ -130,27 +132,38 @@ class DateField extends Component {
         }
     }
 
-    _btn_spin_in = () => <div className='btn-spin browser-default'
-        onClick={(event) => {
-            var value = this.state.date;
-            value = moment(value).add(1, 'day');
-            this._onClickBtnSpin(value.format('DD-MM-YYYY'))
-        }}
-        onFocus={this._onFocus}
-    >
-        <input
-            type='url'
-            className='btn-spin browser-default'>
-        </input>
-        <svg xmlns="http://www.w3.org/2000/svg"
-            style={{ position: 'absolute', fill: '#013a81' }}
-            width="24"
-            height="24"
+    // _btn_spin_in = () => <div className='btn-spin browser-default'
+    //     onClick={(event) => {
+    //         var value = this.state.date;
+    //         value = moment(value).add(1, 'day');
+    //         this._onClickBtnSpin(value.format('DD-MM-YYYY'))
+    //     }}
+    //     onFocus={this._onFocus}
+    // >
+    //     <input
+    //         type='url'
+    //         className='btn-spin browser-default'>
+    //     </input>
+    //     <svg xmlns="http://www.w3.org/2000/svg"
+    //         style={{ position: 'absolute', fill: '#013a81' }}
+    //         width="24"
+    //         height="24"
 
-            viewBox="0 0 24 24">
-            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-        </svg>
-    </div>
+    //         viewBox="0 0 24 24">
+    //         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+    //     </svg>
+    // </div>
+
+
+
+    _btn_spin_in = () =>
+        <BtnSpin
+            onClick={() => {
+                console.log(1);
+                this._onClickBtnSpin(moment(this.state.date).add(1, 'day').format('DD-MM-YYYY'))
+            }}
+            onFocus={this._onFocus}
+        ><SvgPlus/></BtnSpin>
 
     _btn_spin_out = () => <div className='btn-spin browser-default'
         onClick={(event) => {
@@ -276,10 +289,8 @@ class DateField extends Component {
             label,
             outlined,
             type,
-            name } = this.state
-        const onActive = (this.state.currentValue) ? true : false;
-        //console.log('render - ' + currentValue)
-        //if (currentValue === typeof())
+            name } = this.state;
+        const onActive = !!this.state.currentValue;
         return (
             <div style={{}} className={this._classNameCont({ outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
                 {this._label({ outlined, onFocus, onActive, label })}
