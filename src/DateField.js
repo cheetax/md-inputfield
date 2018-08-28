@@ -1,7 +1,7 @@
 import { Calendar } from 'ch-calendar';
 import 'ch-calendar/dist/ch-calendar.css';
-import BtnSpin from './BtnSpin';
-import { SvgPlus } from './Svg';
+import { BtnSpin, BtnCalendar } from './BtnSpin';
+import { SvgPlus, SvgMinus, SvgCalendar } from './Svg';
 import moment from 'moment';
 import 'moment/locale/ru';
 import React, { Component } from 'react';
@@ -132,82 +132,22 @@ class DateField extends Component {
         }
     }
 
-    // _btn_spin_in = () => <div className='btn-spin browser-default'
-    //     onClick={(event) => {
-    //         var value = this.state.date;
-    //         value = moment(value).add(1, 'day');
-    //         this._onClickBtnSpin(value.format('DD-MM-YYYY'))
-    //     }}
-    //     onFocus={this._onFocus}
-    // >
-    //     <input
-    //         type='url'
-    //         className='btn-spin browser-default'>
-    //     </input>
-    //     <svg xmlns="http://www.w3.org/2000/svg"
-    //         style={{ position: 'absolute', fill: '#013a81' }}
-    //         width="24"
-    //         height="24"
-
-    //         viewBox="0 0 24 24">
-    //         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-    //     </svg>
-    // </div>
-
-
-
     _btn_spin_in = () =>
         <BtnSpin
-            onClick={() => {
-                console.log(1);
-                this._onClickBtnSpin(moment(this.state.date).add(1, 'day').format('DD-MM-YYYY'))
-            }}
+            onClick={() => this._onClickBtnSpin(moment(this.state.date).add(1, 'day').format('DD-MM-YYYY'))}
             onFocus={this._onFocus}
-        ><SvgPlus/></BtnSpin>
+        ><SvgPlus /></BtnSpin>
 
-    _btn_spin_out = () => <div className='btn-spin browser-default'
-        onClick={(event) => {
-            var value = this.state.date;
-            value = moment(value).add(-1, 'day');
-            this._onClickBtnSpin(value.format('DD-MM-YYYY'))
-            //this._onChange(event)
-        }}
+    _btn_spin_out = () => <BtnSpin
+        onClick={() => this._onClickBtnSpin(moment(this.state.date).add(-1, 'day').format('DD-MM-YYYY'))}
         onFocus={this._onFocus}
-    >
-        <input
-            type='url'
-            className='btn-spin browser-default'>
-        </input>
-        <svg xmlns="http://www.w3.org/2000/svg"
-            style={{ position: 'absolute', fill: '#013a81' }}
-            width="24"
-            height="24"
-            viewBox="0 0 24 24">
-            <path d="M19 13H5v-2h14v2z" />
-        </svg>
-    </div>
+    ><SvgMinus /></BtnSpin>
 
     _btnCalendar = () => ((this.state.onCalendarButton) ? <div style={{ position: 'relative', color: 'initial' }} >
         {this._ModalCalendar()}
-        <div className='btn-spin browser-default'
-            onClick={(event) => {
-                this._onClickBtnCalendar();
-                //this._onChange(event)
-            }}
-        >
-            <input
-                type='url'
-                className='btn-spin browser-default'>
-            </input>
-            <svg xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                style={{ position: 'absolute', fill: '#013a81' }}>
-                <path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z" />
-            </svg>
-
-        </div>
+        <BtnCalendar
+            onClick={(event) => this._onClickBtnCalendar()}
+        ><SvgCalendar /></BtnCalendar>
     </div> : null)
 
     _onClickBtnSpin = (value) => {
@@ -219,13 +159,9 @@ class DateField extends Component {
         if (cancel) this._onChange(evt);
     }
 
-    _onClickBtnCalendar = () => {
-        var openModalCalendar = !this.state.openModalCalendar;
-
-        this.setState({
-            openModalCalendar
-        })
-    }
+    _onClickBtnCalendar = () => this.setState({
+        openModalCalendar: !this.state.openModalCalendar
+    })
 
     _onSelectCalendar = (date) => {
         var currentValue = moment(date).format('DD-MM-YYYY');
@@ -237,7 +173,6 @@ class DateField extends Component {
         })
         this._onClickBtnSpin(currentValue);
         elem.focus();
-
     }
 
     _ModalCalendar = () => {
