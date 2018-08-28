@@ -32,10 +32,10 @@ class App extends Component {
         <h3>Outlined text fields</h3>
         <div className='App-intro' >
           <NumberField outlined onSpinButtons onChange={(event) => console.log(event)} name='label' value={123456789} type='number' label='Label' />
-          <DateField outlined onCalendarButton onSpinButtons onChange={(event) => console.log(event.target.value)} name='date' value={date} label='Date' />
-          <MonthField outlined onCalendarButton onSpinButtons onChange={(event) => console.log(event.target.value)} name='month' value={date} label='Month' />
-          <QuarterField outlined onSpinButtons onChangeObject={(obj) => console.log(obj)} name='quarter' value={date} label='Quarter' /> 
-          <YearField outlined onSpinButtons onChangeObject={(obj) => console.log(obj)} name='year' value={date} label='Year' />
+          <DateField outlined onCalendarButton onSpinButtons onChange={(event) => console.log(event.target.value)} onChangeObject={(obj) => console.log(obj)} name='date' value={date} label='Date' />
+          <MonthField outlined onCalendarButton onSpinButtons onChange={(event) => console.log(event.target.value)} onChangeObject={(obj) => console.log(obj)} name='month' value={date} label='Month' />
+          <QuarterField outlined onSpinButtons onChange={(event) => console.log(event.target.value)} onChangeObject={(obj) => console.log(obj)} name='quarter' value={date} label='Quarter' /> 
+          <YearField outlined onSpinButtons onChange={(event) => console.log(event.target.value)} onChangeObject={(obj) => console.log(obj)} name='year' value={date} label='Year' />
         </div>
       </div>
     );
