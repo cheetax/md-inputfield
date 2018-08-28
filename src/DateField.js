@@ -73,27 +73,20 @@ class DateField extends Component {
 
     _onChange = (event) => {
         var value = event.target.value;
-        var date = this.state.date
-        if (moment(value, 'DD-MM-YYYY').isValid()) {
-            date = moment(value, 'DD-MM-YYYY');
-        }
-        else {
-            date = moment('01-01-1970');
-        }
-
+        var date = moment(value, 'DD-MM-YYYY').isValid() ? moment(value, 'DD-MM-YYYY') : moment('01-01-1970');
+        console.log(moment(value, 'DD-MM-YYYY'));
         this.setState({
             currentValue: value,
             date
         })
 
-        value = {
+        event.target.value = JSON.stringify({
             dateFrom: (moment(date).startOf('day').toISOString(true)),
             dateTo: (moment(date).endOf('day').toISOString(true)),
-        }
-        event.target.value = JSON.stringify(value);
+        });
 
-        if (this.props.onChange) this.props.onChange(event)
-        if (this.props.onChangeObject) this.props.onChangeObject(value)
+        this.props.onChange && this.props.onChange(event)
+        this.props.onChangeObject && this.props.onChangeObject(value)
     }
 
     _classNameCont = ({ outlined, onFocus, onActive }) => {
