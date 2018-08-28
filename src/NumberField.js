@@ -91,13 +91,7 @@ class NumberField extends Component {
 
     _btn_spin_in = () => <div className='btn-spin browser-default'
         style={{
-            position: 'relative',
-            height: 24,
-            width: 24,
-            margin: 1,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            
         }}
         onClick={(event) => {
             var value = this.state.currentValue;
@@ -122,13 +116,6 @@ class NumberField extends Component {
 
     _btn_spin_out = () => <div className='btn-spin browser-default'
         style={{
-            position: 'relative',
-            height: 24,
-            width: 24,
-            margin: 1,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
         }}
         onClick={(event) => {
             var value = this.state.currentValue;
