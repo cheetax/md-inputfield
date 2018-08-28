@@ -154,9 +154,7 @@ class DateField extends Component {
         var elem = this.state.elem;
         var evt = new Event('change', { bubbles: true });
         elem.value = value;
-        var cancel = elem.dispatchEvent(evt);
-        //console.log('calendar - ' + value)
-        if (cancel) this._onChange(evt);
+        elem.dispatchEvent(evt) && this._onChange(evt);
     }
 
     _onClickBtnCalendar = () => this.setState({
