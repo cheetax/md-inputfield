@@ -1,6 +1,8 @@
 import React from 'react'
 import { Calendar } from 'ch-calendar';
-import 'ch-calendar/dist/ch-calendar.css';
+//import 'ch-calendar/dist/ch-calendar.css';
+
+const ClassModal = (openModal) => (openModal) ? 'modal-dialog active' : 'modal-dialog'
 
 export const ModalCalendar = ({ openModal, date, onClick, onSelect }) => {
     return <div >
@@ -15,15 +17,7 @@ export const ModalCalendar = ({ openModal, date, onClick, onSelect }) => {
             zIndex: '999',
         } : null}
             onClick={onClick} />
-        <div className='modal-dialog' style={openModal ? {
-            display: 'block',
-            opacity: '1',
-            padding: '8px 0px'
-        } : {
-                display: 'none',
-                opacity: '1',
-                padding: '8px 0px'
-            }} >
+        <div className={ClassModal(openModal)} >
             <Calendar date={date} onSelect={onSelect} />
         </div>
     </div>

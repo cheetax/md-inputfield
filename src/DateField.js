@@ -7,8 +7,8 @@ import moment from 'moment';
 import 'moment/locale/ru';
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
-import './btnSpin.css';
-import './DateField.css';
+
+//import './DateField.css';
 moment.locale('ru')
 
 class DateField extends Component {

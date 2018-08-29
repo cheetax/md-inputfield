@@ -1,4 +1,4 @@
-div.ch-input-data {
+input.ch-input {
     cursor: text;
     position: relative;
     background: transparent;
@@ -31,7 +31,30 @@ div.ch-input-data {
     border: 1px solid #ddd;
 }
 
+.ch-field:not(.outlined)::before {
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    content: '';
+    border-top: none;
+    border-right: none;
+    border-left: none;    
+    border-bottom: 1px solid black;
+    transform: scaleX(0);
+    opacity: 0;
+    transition: opacity .3s, transform 0s .3s;
+}
+
+.ch-field:not(.outlined):hover::before {
+    border-bottom: 1px solid black;
+    opacity: 1;    
+    transform: scaleX(1);
+    transition: transform 0.3s, opacity 0s;
+}
+
 .ch-field:not(.outlined)::after {
+    border-bottom: 2px solid #4caf50;
     position: absolute;
     left: 0;
     bottom: 0px;
@@ -40,17 +63,9 @@ div.ch-input-data {
     border-top: none;
     border-right: none;
     border-left: none;
-    /* border-bottom: initial; */
     transform: scaleX(0);
     opacity: 0;
     transition: opacity .3s, transform 0s .3s;
-}
-
-.ch-field:not(.outlined):hover::after {
-    border-bottom: 1px solid;
-    opacity: 1;    
-    transform: scaleX(1);
-    transition: transform 0.3s, opacity 0s;
 }
 
 .ch-field:not(.outlined).focus::after {
@@ -60,14 +75,15 @@ div.ch-input-data {
     width: 100%;
     content: '';
     opacity: 1;
-    border-bottom: 2px solid #4caf50;
+    border-bottom: 2px solid;
+    border-bottom-color: #4caf50;
     transform: scaleX(1);
-    transition: transform 0.3s, opacity 0s, border-bottom 0s;
+    transition: transform .5s, opacity 0s, border-bottom 0s, border-bottom-color .5s;
 }
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */ 
 
-div.ch-input.outlined {    
+input.ch-input.outlined {    
     margin: 16px 12px auto 14px;
 }
 
@@ -104,7 +120,7 @@ div.ch-input.outlined {
     font-size: 12px;
     transform: translateY(-26px) ;
     transition-property: transform, font-size, color;
-    transition: .3s
+    transition: .3s, color 0s;
 }
 
 .ch-label-outlined-cont {
@@ -139,7 +155,7 @@ div.ch-input.outlined {
 .ch-field.focus {
     /* padding: 0; */
     color: #4caf50;
-    transition: 0.3s;
+    /* transition: 0.3s; */
 }
 
 .ch-field.outlined.active:not(.focus) {
@@ -190,14 +206,59 @@ input.ch-input, textarea.ch-input{
     color: initial;
 }
 
+.btn-spin:not(input):hover {
+    cursor: pointer;
+    border: 2px solid #adb0b2; 
+}
+/* .btn-spin.hover {
+    cursor: pointer;
+    border: 2px solid #4caf50; 
 
+} */
+
+.btn-spin:not(input):active {
+    /* border: 2px solid red; */
+    background: #adb0b2;
+}
+
+a.btn-spin {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+}
+input.btn-spin {
+    cursor: pointer;  
+    user-select: none;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 99;
+    
+    border: none;
+}
+
+div.btn-spin {
+    cursor: pointer;    
+    transition: all ease 0.3s;
+    border-radius: 50%;
+    border-color: transparent;
+    user-select: none;
+    position: relative;
+    background: transparent;
+    border: 2px solid transparent;    
+    z-index: 99;
+}
 
 .modal-dialog {
-    /* display: none; */
+    display: none;
     position: absolute;
     top: 100%;
     right: 0;
     background: #FFFFFF;
+    
     /* padding: 0; */
     /* max-height: 70%; */
     margin: 0 10px;
@@ -205,4 +266,10 @@ input.ch-input, textarea.ch-input{
     will-change: top, opacity;
     box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
     z-index: 1003;
+}
+
+.modal-dialog.active {
+    display: block;
+    opacity: 1;
+    padding: 8px 0px;
 }

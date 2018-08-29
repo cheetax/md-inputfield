@@ -1,11 +1,10 @@
-import { Calendar } from 'ch-calendar';
-import 'ch-calendar/dist/ch-calendar.css';
+
 import moment from 'moment';
 import 'moment/locale/ru';
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
-import './btnSpin.css';
-import './QuarterField.css';
+//import './btnSpin.css';
+//import './QuarterField.css';
 moment.locale('ru')
 
 class QuarterField extends Component {

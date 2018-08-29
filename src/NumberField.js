@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './NumberField.css'
+//import './NumberField.css'
 
 class NumberField extends Component {
 
