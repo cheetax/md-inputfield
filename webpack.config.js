@@ -1,12 +1,5 @@
 var path = require('path');
-//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-// const HtmlWebPackPlugin = require("html-webpack-plugin");
-
-// const htmlWebpackPlugin = new HtmlWebPackPlugin({
-//   // template: "./src/index.html",
-//   // filename: "./index.html"
-// });
 
 module.exports = {
   //entry: './src/index.js',
@@ -55,18 +48,6 @@ module.exports = {
           "css-loader"
         ]
       },
-      // {
-      //   test: /\.*css$/,
-      //   //include: path.resolve(__dirname, 'src'),
-      //   exclude: /(node_modules|bower_components|build)/,
-      //   use: ExtractTextPlugin.extract({
-      //     fallback: 'style-loader',
-      //     use: [
-      //       'css-loader',
-      //       'sass-loader'
-      //     ]
-      //   })
-      // }
     ],
     
   },

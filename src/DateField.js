@@ -1,7 +1,8 @@
-import { Calendar } from 'ch-calendar';
-import 'ch-calendar/dist/ch-calendar.css';
 import { BtnSpin, BtnCalendar } from './BtnSpin';
 import { SvgPlus, SvgMinus, SvgCalendar } from './Svg';
+import { ModalCalendar } from './ModalCalendar';
+import { Label } from './Label';
+import { ClassNameCont, ClassNameInput } from './ClassName';
 import moment from 'moment';
 import 'moment/locale/ru';
 import React, { Component } from 'react';
@@ -18,111 +19,57 @@ class DateField extends Component {
         //console.log(date)
         this.state = {
             onFocus: false,
-            label: props.label,
             value: moment(props.value).startOf('day') || date,
             currentValue: moment(props.value).format('DD-MM-YYYY') || date.format('DD-MM-YYYY'),
             date,
-            outlined: props.outlined,
-            type: props.type,
-            name: props.name,
-            spinButtons: props.onSpinButtons,
             elem: null,
             openModalCalendar: false,
-            onCalendarButton: props.onCalendarButton,
         }
-        // this._onFocus = this._onFocus.bind(this)
-        //this._ref = this._ref.bind(this)
     }
 
     _onFocus = (event) => {
         var onFocus = false;
         var elem = this.state.elem;
-        //console.log('focus click - ' + event.type)
         switch (event.type) {
             case 'focus':
             case 'click':
                 onFocus = true;
                 elem.focus();
+                break;
             case 'blur':
                 if (this.state.openModalCalendar) {
                     onFocus = true;
                     elem.focus();
                 }
-
+                break;
         }
-
         this.setState({
             onFocus,
         })
-
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        //console.log(nextProps.value+ ' ' + this.state.value)
-
+    componentWillReceiveProps(nextProps) {
         if (nextProps.value) {
-            var value = moment(nextProps.value).startOf('day');
-            //console.log(moment(value).isSame(this.state.value))
-            if (!moment(value).isSame(this.state.value))
-                this.setState({ value })
-        }
-        else {
-
+            if (!moment(moment(nextProps.value).startOf('day')).isSame(moment(this.props.value).startOf('day'))) {
+                this.setState({ currentValue: moment(nextProps.value).startOf('day').format('DD-MM-YYYY') })
+            }
         }
     }
 
     _onChange = (event) => {
         var value = event.target.value;
         var date = moment(value, 'DD-MM-YYYY').isValid() ? moment(value, 'DD-MM-YYYY') : moment('01-01-1970');
-        console.log(moment(value, 'DD-MM-YYYY'));
         this.setState({
             currentValue: value,
             date
         })
-
         event.target.value = JSON.stringify({
             dateFrom: (moment(date).startOf('day').toISOString(true)),
             dateTo: (moment(date).endOf('day').toISOString(true)),
         });
-
-        this.props.onChange && this.props.onChange(event)
-        this.props.onChangeObject && this.props.onChangeObject(value)
-    }
-
-    _classNameCont = ({ outlined, onFocus, onActive }) => {
-        var result = 'ch-field '
-
-        if (outlined) {
-            result = result + 'outlined '
-            if (onFocus) result = result + 'focus '
-            if (onActive) result = result + 'active '
-        }
-        else {
-            if (onFocus) result = result + 'focus '
-            if (onActive) result = result + 'active '
-        }
-        return result;
-    }
-
-    _classNameInput = ({ outlined }) => (outlined) ? 'ch-input outlined browser-default' : 'ch-input browser-default'
-
-    _label = ({ outlined, onFocus, onActive, label }) => {
-        if (outlined) {
-
-            return (
-                <div className={(onFocus || onActive) ? 'ch-label-outlined-cont active' : 'ch-label-outlined-cont'} >
-                    <div className={(onFocus || onActive) ? 'ch-label-outlined-top active' : 'ch-label-outlined-top'} />
-                    <div className={(() => {
-                        var result = 'ch-label outlined '
-                        if (onFocus) result += 'focus ';
-                        if (onActive) result += 'active ';
-                        return result;
-                    })()}>{label}</div>
-                </div>)
-        }
-        else {
-            return <div className={(onFocus || onActive) ? 'ch-label active ' : 'ch-label'}>{label}</div>
-        }
+        let props = this.props;
+        props.onChange && props.onChange(event)
+        props.onChangeObject && props.onChangeObject(value)
     }
 
     _btn_spin_in = () =>
@@ -136,7 +83,7 @@ class DateField extends Component {
         onFocus={this._onFocus}
     ><SvgMinus /></BtnSpin>
 
-    _btnCalendar = () => ((this.state.onCalendarButton) ? <div style={{ position: 'relative', color: 'initial' }} >
+    _btnCalendar = () => ((this.props.onCalendarButton) ? <div style={{ position: 'relative', color: 'initial' }} >
         {this._ModalCalendar()}
         <BtnCalendar
             onClick={(event) => this._onClickBtnCalendar()}
@@ -167,43 +114,22 @@ class DateField extends Component {
     }
 
     _ModalCalendar = () => {
-        var openModal = this.state.openModalCalendar
-        var date = this.state.date;
-        //console.log(date)
         return <div >
-            <div style={openModal ? {
-                position: 'fixed',
-                background: 'black',
-                opacity: '0',
-                top: '0',
-                left: '0',
-                width: '100%',
-                height: '100%',
-                zIndex: '999',
-            } : null}
+            <ModalCalendar
+                date={this.state.date}
+                openModal={this.state.openModalCalendar}
+                onSelect={this._onSelectCalendar}
                 onClick={() => {
                     this.setState({ openModalCalendar: false })
                 }} />
-            <div className='modal-dialog' style={openModal ? {
-                display: 'block',
-                opacity: '1',
-                padding: '8px 0px'
-            } : {
-                    display: 'none',
-                    opacity: '1',
-                    padding: '8px 0px'
-                }} >
-                <Calendar date={date} onSelect={this._onSelectCalendar} />
-            </div>
         </div>
     }
 
     _ref = (elem) => {
-        //elem.mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" })
         this.setState({ elem })
     }
 
-    _spinButtons = (() => (this.state.spinButtons) ? <div style={{ display: 'flex' }} >
+    _spinButtons = (() => (this.props.onSpinButtons) ? <div style={{ display: 'flex' }} >
         {this._btn_spin_out()}
         {this._btn_spin_in()}
     </div> : null)
@@ -211,23 +137,18 @@ class DateField extends Component {
     render() {
         const {
             onFocus,
-            currentValue,
-            label,
-            outlined,
-            type,
-            name } = this.state;
+            currentValue, } = this.state;
         const onActive = !!this.state.currentValue;
         return (
-            <div style={{}} className={this._classNameCont({ outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
-                {this._label({ outlined, onFocus, onActive, label })}
-                {/* <input ref={this._ref} name={name} value={currentValue.toLocaleDateString()} type='text' className={this._classNameInput({ outlined })} onChange={this._onChange} /> */}
+            <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
+                {Label({ outlined: this.props.outlined, onFocus, onActive, label: this.props.label })}
                 <InputMask
                     mask="99-99-9999"
                     inputRef={this._ref}
-                    name={name}
+                    name={this.props.name}
                     value={currentValue}
-                    type='text'
-                    className={this._classNameInput({ outlined })}
+                    type={this.props.type}
+                    className={ClassNameInput({ outlined: this.props.outlined })}
                     onChange={(event) => {
                         //console.log('event - ' + event.target.value)
                         return this._onChange(event)
@@ -240,4 +161,5 @@ class DateField extends Component {
         )
     }
 }
+
 export default DateField;

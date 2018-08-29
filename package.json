@@ -23,10 +23,7 @@
     "url": "https://github.com/cheetax/md-inputfield/issues"
   },
   "homepage": "https://github.com/cheetax/md-inputfield#readme",
-  "peerDependencies": {
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0"
-  },
+  
   "files": [
     "dist"
   ],
@@ -45,8 +42,6 @@
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.1",
     "node-sass": "^4.9.3",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
     "webpack": "^4.16.5",
