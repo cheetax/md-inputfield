@@ -1,6 +1,6 @@
 var path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const webpack = require("webpack");
 module.exports = {
   //entry: './src/index.js',
   output: {
@@ -14,6 +14,10 @@ module.exports = {
   //   }),
   // ],
   plugins: [
+    new webpack.ContextReplacementPlugin(
+      /moment[\/\\]locale$/,
+      /ru/
+    ),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
@@ -49,10 +53,10 @@ module.exports = {
         ]
       },
     ],
-    
+
   },
   //plugins: [htmlWebpackPlugin],
-  
+
   externals: {
     // Don't bundle react or react-dom
     react: {
