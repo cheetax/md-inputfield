@@ -4,7 +4,7 @@ import { Calendar } from 'ch-calendar';
 
 const ClassModal = (openModal) => (openModal) ? 'modal-dialog active' : 'modal-dialog'
 
-export const ModalCalendar = ({ openModal, date, onClick, onSelect }) => {
+export const ModalCalendar = ({ openModal, date, onClick, onSelect, isMonth=false }) => {
     return <div >
         <div style={openModal ? {
             position: 'fixed',
@@ -18,7 +18,7 @@ export const ModalCalendar = ({ openModal, date, onClick, onSelect }) => {
         } : null}
             onClick={onClick} />
         <div className={ClassModal(openModal)} >
-            <Calendar date={date} onSelect={onSelect} />
+            <Calendar isMonth={isMonth} date={date} onSelect={onSelect} />
         </div>
     </div>
 }

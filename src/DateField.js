@@ -7,8 +7,6 @@ import moment from 'moment';
 import 'moment/locale/ru';
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
-
-//import './DateField.css';
 moment.locale('ru')
 
 class DateField extends Component {
@@ -16,10 +14,8 @@ class DateField extends Component {
     constructor(props) {
         super(props)
         var date = moment().startOf('day');
-        //console.log(date)
         this.state = {
             onFocus: false,
-            value: moment(props.value).startOf('day') || date,
             currentValue: moment(props.value).format('DD-MM-YYYY') || date.format('DD-MM-YYYY'),
             date,
             elem: null,
@@ -43,6 +39,7 @@ class DateField extends Component {
                 }
                 break;
         }
+
         this.setState({
             onFocus,
         })
@@ -63,10 +60,11 @@ class DateField extends Component {
             currentValue: value,
             date
         })
-        event.target.value = JSON.stringify({
-            dateFrom: (moment(date).startOf('day').toISOString(true)),
-            dateTo: (moment(date).endOf('day').toISOString(true)),
-        });
+        value = {
+            dateFrom: (moment(date, 'ru').startOf('day').toISOString(true)),
+            dateTo: (moment(date, 'ru').endOf('day').toISOString(true)),
+        }
+        event.target.value = JSON.stringify(value);
         let props = this.props;
         props.onChange && props.onChange(event)
         props.onChangeObject && props.onChangeObject(value)
@@ -83,12 +81,12 @@ class DateField extends Component {
         onFocus={this._onFocus}
     ><SvgMinus /></BtnSpin>
 
-    _btnCalendar = () => ((this.props.onCalendarButton) ? <div style={{ position: 'relative', color: 'initial' }} >
+    _btnCalendar = () => ((this.props.onCalendarButton) && <div style={{ position: 'relative', color: 'initial' }} >
         {this._ModalCalendar()}
         <BtnCalendar
             onClick={(event) => this._onClickBtnCalendar()}
         ><SvgCalendar /></BtnCalendar>
-    </div> : null)
+    </div>)
 
     _onClickBtnSpin = (value) => {
         var elem = this.state.elem;
@@ -113,17 +111,15 @@ class DateField extends Component {
         elem.focus();
     }
 
-    _ModalCalendar = () => {
-        return <div >
-            <ModalCalendar
-                date={this.state.date}
-                openModal={this.state.openModalCalendar}
-                onSelect={this._onSelectCalendar}
-                onClick={() => {
-                    this.setState({ openModalCalendar: false })
-                }} />
-        </div>
-    }
+    _ModalCalendar = () => <div >
+        <ModalCalendar
+            date={this.state.date}
+            openModal={this.state.openModalCalendar}
+            onSelect={this._onSelectCalendar}
+            onClick={() => {
+                this.setState({ openModalCalendar: false })
+            }} />
+    </div>
 
     _ref = (elem) => {
         this.setState({ elem })
@@ -149,10 +145,7 @@ class DateField extends Component {
                     value={currentValue}
                     type={this.props.type}
                     className={ClassNameInput({ outlined: this.props.outlined })}
-                    onChange={(event) => {
-                        //console.log('event - ' + event.target.value)
-                        return this._onChange(event)
-                    }} />
+                    onChange={(event) => this._onChange(event)}/>
                 <div style={{ margin: 'auto 8px', display: 'flex' }} >
                     {this._btnCalendar()}
                     {this._spinButtons()}
