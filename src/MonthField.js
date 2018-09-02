@@ -3,25 +3,25 @@ import { SvgPlus, SvgMinus, SvgCalendar } from './Svg';
 import { ModalCalendar } from './ModalCalendar';
 import { Label } from './Label';
 import { ClassNameCont, ClassNameInput } from './ClassName';
-import moment from 'moment';
-import 'moment/locale/ru';
+import { startOfMonth, endOfMonth, addMonths, format, isEqual, isValid, isDate } from 'date-fns';
+// import moment from 'moment';
+// import 'moment/locale/ru';
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
-moment.locale('ru')
+//moment.locale('ru')
 
 class MonthField extends Component {
 
     constructor(props) {
-        super(props)
-        var date = moment().startOf('month');
+        super(props)        
+        var date = startOfMonth(new Date());
         this.state = {
             onFocus: false,
-            date,
+            date: props.value && (isDate(props.value) ? startOfMonth(props.value) : date) || date,
             elem: null,
             openModalCalendar: false,
         }
     }
-
 
     _onFocus = (event) => {
         var onFocus = false;
@@ -48,8 +48,13 @@ class MonthField extends Component {
 
     componentWillcomponentWillReceivePropsUpdate(nextProps) {
         if (nextProps.value) {
-            if (!moment(moment(nextProps.value).startOf('month')).isSame(this.props.value))
-                this.setState({ date: moment(nextProps.value).startOf('month') })
+            if (isDate(nextProps.value)) {
+                if (!isEqual(startOfMonth(nextProps.value), startOfMonth(this.props.value))) {
+                    this.setState({
+                        date: startOfMonth(nextProps.value)
+                    })
+                }
+            }
         }
     }
 

@@ -3,28 +3,23 @@ import { SvgPlus, SvgMinus, SvgCalendar } from './Svg';
 import { ModalCalendar } from './ModalCalendar';
 import { Label } from './Label';
 import { ClassNameCont, ClassNameInput } from './ClassName';
-import {startOfDay, addDays,  } from 'date-fns'
- //import moment from 'moment';
+import { startOfDay, endOfDay, addDays, format, isEqual, isValid, isDate } from 'date-fns';
+import { toDate } from './toDate';
+//import moment from 'moment';
 //import 'moment/locale/ru';
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
 //moment.locale('ru')
 
-Date.prototype.Add = function(number, string) {
-    console.log(this.valueOf())
-    var date = new Date(this.valueOf())
-    return date.setDate(date.getDate() + number);
-}
-
 class DateField extends Component {
 
     constructor(props) {
         super(props)
-        var date = startOfDay(date);
+        var date = startOfDay(new Date());
         this.state = {
             onFocus: false,
-            currentValue: moment(props.value).format('DD-MM-YYYY') || date.format('DD-MM-YYYY'),
-            date,
+            currentValue: props.value && (isDate(props.value) ? format(startOfDay(props.value), 'DD-MM-YYYY') : format(date, 'DD-MM-YYYY')) || format(date, 'DD-MM-YYYY'),
+            date:  props.value && (isDate(props.value) ? startOfDay(props.value) : date) || date,
             elem: null,
             openModalCalendar: false,
         }
@@ -54,22 +49,27 @@ class DateField extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.value) {
-            if (!moment(moment(nextProps.value).startOf('day')).isSame(moment(this.props.value).startOf('day'))) {
-                this.setState({ currentValue: moment(nextProps.value).startOf('day').format('DD-MM-YYYY') })
+            if (isValid(nextProps.value)) {
+                if (!isEqual(startOfDays(nextProps.value), startOfDays(this.props.value))) {
+                    this.setState({
+                        currentValue: format(nextProps.value, 'DD-MM-YYYY'),
+                        date: startOfDay(nextProps.value)
+                    })
+                }
             }
         }
     }
 
     _onChange = (event) => {
         var value = event.target.value;
-        var date = moment(value, 'DD-MM-YYYY').isValid() ? moment(value, 'DD-MM-YYYY') : moment('01-01-1970');
+        var date = isValid(toDate(value)) ? toDate(value) : toDate('01-01-1970');
         this.setState({
             currentValue: value,
             date
         })
         value = {
-            dateFrom: (moment(date, 'ru').startOf('day').toISOString(true)),
-            dateTo: (moment(date, 'ru').endOf('day').toISOString(true)),
+            dateFrom: startOfDay(date),
+            dateTo: endOfDay(date),
         }
         event.target.value = JSON.stringify(value);
         let props = this.props;
@@ -78,17 +78,14 @@ class DateField extends Component {
     }
 
     _btn_spin_in = () => {
-        //var date = new Date()
-        //var date1 = date.Add(1, 'day')
-        //console.log(date1 + ' ' + date)
         return <BtnSpin
-            onClick={() => this._onClickBtnSpin(moment(this.state.date).add(1, 'day').format('DD-MM-YYYY'))}
+            onClick={() => this._onClickBtnSpin(format(addDays(this.state.date, 1), 'DD-MM-YYYY'))}
             onFocus={this._onFocus}
         ><SvgPlus /></BtnSpin>
     }
 
     _btn_spin_out = () => <BtnSpin
-        onClick={() => this._onClickBtnSpin(moment(this.state.date).add(-1, 'day').format('DD-MM-YYYY'))}
+        onClick={() => this._onClickBtnSpin(format(addDays(this.state.date, -1), 'DD-MM-YYYY'))}
         onFocus={this._onFocus}
     ><SvgMinus /></BtnSpin>
 
@@ -111,11 +108,11 @@ class DateField extends Component {
     })
 
     _onSelectCalendar = (date) => {
-        var currentValue = moment(date).format('DD-MM-YYYY');
+        var currentValue = format(date, 'DD-MM-YYYY');
         var elem = this.state.elem;
         this.setState({
             openModalCalendar: false,
-            date: moment(date),
+            date,
             currentValue,
         })
         this._onClickBtnSpin(currentValue);
