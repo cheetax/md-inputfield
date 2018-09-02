@@ -3,17 +3,24 @@ import { SvgPlus, SvgMinus, SvgCalendar } from './Svg';
 import { ModalCalendar } from './ModalCalendar';
 import { Label } from './Label';
 import { ClassNameCont, ClassNameInput } from './ClassName';
-import moment from 'moment';
-import 'moment/locale/ru';
+import {startOfDay, addDays,  } from 'date-fns'
+ //import moment from 'moment';
+//import 'moment/locale/ru';
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
-moment.locale('ru')
+//moment.locale('ru')
+
+Date.prototype.Add = function(number, string) {
+    console.log(this.valueOf())
+    var date = new Date(this.valueOf())
+    return date.setDate(date.getDate() + number);
+}
 
 class DateField extends Component {
 
     constructor(props) {
         super(props)
-        var date = moment().startOf('day');
+        var date = startOfDay(date);
         this.state = {
             onFocus: false,
             currentValue: moment(props.value).format('DD-MM-YYYY') || date.format('DD-MM-YYYY'),
@@ -70,11 +77,15 @@ class DateField extends Component {
         props.onChangeObject && props.onChangeObject(value)
     }
 
-    _btn_spin_in = () =>
-        <BtnSpin
+    _btn_spin_in = () => {
+        //var date = new Date()
+        //var date1 = date.Add(1, 'day')
+        //console.log(date1 + ' ' + date)
+        return <BtnSpin
             onClick={() => this._onClickBtnSpin(moment(this.state.date).add(1, 'day').format('DD-MM-YYYY'))}
             onFocus={this._onFocus}
         ><SvgPlus /></BtnSpin>
+    }
 
     _btn_spin_out = () => <BtnSpin
         onClick={() => this._onClickBtnSpin(moment(this.state.date).add(-1, 'day').format('DD-MM-YYYY'))}
@@ -145,7 +156,7 @@ class DateField extends Component {
                     value={currentValue}
                     type={this.props.type}
                     className={ClassNameInput({ outlined: this.props.outlined })}
-                    onChange={(event) => this._onChange(event)}/>
+                    onChange={(event) => this._onChange(event)} />
                 <div style={{ margin: 'auto 8px', display: 'flex' }} >
                     {this._btnCalendar()}
                     {this._spinButtons()}
