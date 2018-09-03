@@ -5,16 +5,14 @@ import { Label } from './Label';
 import { ClassNameCont, ClassNameInput } from './ClassName';
 import { startOfMonth, endOfMonth, addMonths, format, isEqual, isValid, isDate } from 'date-fns';
 import { toDate } from './toDate';
-// import moment from 'moment';
-// import 'moment/locale/ru';
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
-//moment.locale('ru')
+import { locales } from './locales';
 
 class MonthField extends Component {
 
     constructor(props) {
-        super(props)        
+        super(props)
         var date = startOfMonth(new Date());
         this.state = {
             onFocus: false,
@@ -72,7 +70,7 @@ class MonthField extends Component {
         event.target.value = JSON.stringify(value);
         let props = this.props;
         props.onChange && props.onChange(event)
-        props.onChangeObject && onChangeObject(value)        
+        props.onChangeObject && onChangeObject(value)
     }
 
     _btn_spin_in = () => <BtnSpin
@@ -137,7 +135,7 @@ class MonthField extends Component {
             onFocus,
             date
         } = this.state
-        const currentValue = format(date, 'MMMM YYYY');
+        const currentValue = format(date, 'MMMM YYYY', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] });
         const onActive = !!currentValue;
         return (
             <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
