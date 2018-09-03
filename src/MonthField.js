@@ -4,6 +4,7 @@ import { ModalCalendar } from './ModalCalendar';
 import { Label } from './Label';
 import { ClassNameCont, ClassNameInput } from './ClassName';
 import { startOfMonth, endOfMonth, addMonths, format, isEqual, isValid, isDate } from 'date-fns';
+import { toDate } from './toDate';
 // import moment from 'moment';
 // import 'moment/locale/ru';
 import React, { Component } from 'react';
@@ -60,27 +61,27 @@ class MonthField extends Component {
 
     _onChange = (event) => {
         var value = event.target.value;
-        var date = (moment(value, 'DD-MM-YYYY').isValid()) ? moment(value, 'DD-MM-YYYY') : moment('01-01-1970');
+        var date = isValid(toDate(value)) ? toDate(value) : toDate('01-01-1970');
         this.setState({
             date
         })
         value = {
-            dateFrom: (moment(date, 'ru').startOf('month').toISOString(true)),
-            dateTo: (moment(date, 'ru').endOf('month').toISOString(true)),
+            dateFrom: startOfMonth(date),
+            dateTo: endOfMonth(date),
         }
         event.target.value = JSON.stringify(value);
         let props = this.props;
         props.onChange && props.onChange(event)
-        props.onChangeObject && onChangeObject(value)
+        props.onChangeObject && onChangeObject(value)        
     }
 
     _btn_spin_in = () => <BtnSpin
-        onClick={() => this._onClickBtnSpin(moment(this.state.date).add(1, 'month').format('DD-MM-YYYY'))}
+        onClick={() => this._onClickBtnSpin(format(addMonths(this.state.date, 1), 'DD-MM-YYYY'))}
         onFocus={this._onFocus}
     ><SvgPlus /></BtnSpin>
 
     _btn_spin_out = () => <BtnSpin
-        onClick={() => this._onClickBtnSpin(moment(this.state.date).add(-1, 'month').format('DD-MM-YYYY'))}
+        onClick={() => this._onClickBtnSpin(format(addMonths(this.state.date, -1), 'DD-MM-YYYY'))}
         onFocus={this._onFocus}
     ><SvgMinus /></BtnSpin>
 
@@ -105,9 +106,9 @@ class MonthField extends Component {
         var elem = this.state.elem;
         this.setState({
             openModalCalendar: false,
-            date: moment(date),
+            date,
         })
-        this._onClickBtnSpin(moment(date).format('DD-MM-YYYY'));
+        this._onClickBtnSpin(format(date, 'DD-MM-YYYY'));
         elem.focus();
     }
 
@@ -136,7 +137,7 @@ class MonthField extends Component {
             onFocus,
             date
         } = this.state
-        const currentValue = moment(date).format('MMMM YYYY')
+        const currentValue = format(date, 'MMMM YYYY');
         const onActive = !!currentValue;
         return (
             <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
