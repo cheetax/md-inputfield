@@ -1,5 +1,6 @@
 import React from 'react'
 import { Calendar } from 'ch-calendar';
+import './Modal.css'
 //import 'ch-calendar/dist/ch-calendar.css';
 
 const ClassModal = (openModal) => (openModal) ? 'modal-dialog active' : 'modal-dialog'
