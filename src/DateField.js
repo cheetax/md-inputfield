@@ -5,11 +5,8 @@ import { Label } from './Label';
 import { ClassNameCont, ClassNameInput } from './ClassName';
 import { startOfDay, endOfDay, addDays, format, isEqual, isValid, isDate } from 'date-fns';
 import { toDate } from './toDate';
-//import moment from 'moment';
-//import 'moment/locale/ru';
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
-//moment.locale('ru')
 
 class DateField extends Component {
 

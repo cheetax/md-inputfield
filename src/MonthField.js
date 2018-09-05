@@ -45,7 +45,7 @@ class MonthField extends Component {
 
     }
 
-    componentWillcomponentWillReceivePropsUpdate(nextProps) {
+    componentWillReceiveProps(nextProps) {
         if (nextProps.value) {
             if (isDate(nextProps.value)) {
                 if (!isEqual(startOfMonth(nextProps.value), startOfMonth(this.props.value))) {
