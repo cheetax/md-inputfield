@@ -47,7 +47,7 @@ class DateField extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.value) {
             if (isValid(nextProps.value)) {
-                if (!isEqual(startOfDays(nextProps.value), startOfDays(this.props.value))) {
+                if (!isEqual(startOfDay(nextProps.value), startOfDay(this.props.value))) {
                     this.setState({
                         currentValue: format(nextProps.value, 'DD-MM-YYYY'),
                         date: startOfDay(nextProps.value)

@@ -1,19 +1,21 @@
 import React from 'react';
 
+const _input = () => <input
+    type='url'
+    readOnly
+    className='btn-spin browser-default'>
+</input>
+
 const BtnSpin = ({ onClick, onFocus, children }) => <div className='btn-spin browser-default'
     onClick={onClick ? (event) => onClick(event) : null}
     onFocus={(onFocus) ? onFocus : null}>
-    <input
-        type='url'
-        className='btn-spin browser-default'>
-    </input>{children}</div>
+    {_input()}
+    {children}</div>
 
 const BtnCalendar = ({ onClick, onFocus, children }) => <div className='btn-spin browser-default'
     onClick={onClick ? (event) => onClick(event) : null}>
-    <input
-        type='url'
-        className='btn-spin browser-default'>
-    </input>{children}</div>
+    {_input()}
+    {children}</div>
 
 export {
     BtnSpin,
