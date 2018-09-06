@@ -1,6 +1,7 @@
 import { BtnSpin, BtnCalendar } from './BtnSpin';
 import { SvgPlus, SvgMinus, SvgCalendar } from './Svg';
 import { ModalCalendar } from './ModalCalendar';
+import { Calendar } from 'ch-calendar';
 import { Label } from './Label';
 import { ClassNameCont, ClassNameInput } from './ClassName';
 import { startOfMonth, endOfMonth, addMonths, format, isEqual, isValid, isDate } from 'date-fns';
@@ -85,8 +86,8 @@ class MonthField extends Component {
 
     _btnCalendar = () => ((this.props.onCalendarButton) && <div style={{ position: 'relative', color: 'initial' }} >
         {this._ModalCalendar()}
-        <BtnCalendar onClick={() => this._onClickBtnCalendar()}
-        ><SvgCalendar /></BtnCalendar>
+        {/* <BtnCalendar onClick={() => this._onClickBtnCalendar()}
+        ><SvgCalendar /></BtnCalendar> */}
     </div>)
 
     _onClickBtnSpin = (value) => {
@@ -111,14 +112,15 @@ class MonthField extends Component {
     }
 
     _ModalCalendar = () => <div >
-        <ModalCalendar
+        <Calendar isModal isMonth isButtonActive date={this.state.date} onSelect={this._onSelectCalendar} />
+        {/* <ModalCalendar
             date={this.state.date}
             openModal={this.state.openModalCalendar}
             onSelect={this._onSelectCalendar}
             isMonth
             onClick={() => {
                 this.setState({ openModalCalendar: false })
-            }} />
+            }} /> */}
     </div>
 
     _ref = (elem) => {

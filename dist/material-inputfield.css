@@ -439,4 +439,56 @@ a.btn-select {
     transform: translateY(-100%);
     transition: .3s;
 }
+.modal-dialog-button {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    opacity: .5;
+    background: #FFFFFF;
+    overflow: hidden;
+    transform: scale(0);
+    transform-origin: right top;
+    padding: 8px 0px;
+    margin: 0 10px;
+    border-radius: 4px;
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
+    z-index: 1003;
+    transition: 0.5s;
+}
+
+.modal-dialog-button.active, .modal-dialog-flex.active, .modal-dialog-overlay.active {
+    opacity: 1;
+    transform: scale(1);    
+    transition: .5s;
+}
+
+.modal-dialog-flex {
+    position: absolute;
+    opacity: .5;
+    background: #FFFFFF;
+    overflow: hidden;
+    transform: scale(0);
+    transform-origin: center;
+    padding: 8px 0px;
+    margin: 0 10px;
+    border-radius: 4px;
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);    
+    z-index: 1003;
+    transition: 0.5s;
+}
+
+.modal-dialog-overlay {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    transform: scale(0);
+    opacity: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    transition: 0.5s;
+}
 
