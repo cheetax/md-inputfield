@@ -5,7 +5,6 @@ import { startOfYear, endOfYear, addYears, format, isEqual, isValid, isDate } fr
 import { toDate } from './toDate';
 import { Label } from './Label';
 import { ClassNameCont, ClassNameInput } from './ClassName';
-import { locales } from './locales';
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
 import './btnSpin.css';

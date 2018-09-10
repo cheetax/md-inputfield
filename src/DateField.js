@@ -1,6 +1,5 @@
-import { BtnSpin, BtnCalendar } from './BtnSpin';
-import { SvgPlus, SvgMinus, SvgCalendar } from './Svg';
-import { ModalCalendar } from './ModalCalendar';
+import { BtnSpin, } from './BtnSpin';
+import { SvgPlus, SvgMinus, } from './Svg';
 import {Calendar} from 'ch-calendar'
 import { Label } from './Label';
 import { ClassNameCont, ClassNameInput } from './ClassName';
