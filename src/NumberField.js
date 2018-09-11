@@ -71,7 +71,7 @@ class NumberField extends Component {
 
     _ref = (elem) => this.setState({ elem })
 
-    _spinButtons = () => (this.props.onSpinButtons) ? <div style={{ margin: 'auto 8px', display: 'flex' }} >
+    _spinButtons = () => (this.props.onSpinButtons) ? <div style={{ display: 'flex' }} >
         {this._btn_spin_out()}
         {this._btn_spin_in()}
     </div> : null
