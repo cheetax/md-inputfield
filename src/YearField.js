@@ -1,4 +1,3 @@
-
 import { BtnSpin } from './BtnSpin';
 import { SvgPlus, SvgMinus } from './Svg';
 import { startOfYear, endOfYear, addYears, format, isEqual, isValid, isDate } from 'date-fns';

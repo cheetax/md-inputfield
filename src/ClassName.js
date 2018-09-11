@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ClassNameCont = ({ outlined, onFocus, onActive }) => {
     var result = 'ch-field '
 
