@@ -1,6 +1,6 @@
 import { BtnSpin, } from './BtnSpin';
 import { SvgPlus, SvgMinus, } from './Svg';
-import {Calendar} from 'ch-calendar'
+import { Calendar } from 'ch-calendar'
 import { Label } from './Label';
 import { ClassNameCont, ClassNameInput } from './ClassName';
 import { startOfDay, endOfDay, addDays, format, isEqual, isValid, isDate } from 'date-fns';
@@ -16,19 +16,23 @@ class DateField extends Component {
         this.state = {
             onFocus: false,
             currentValue: props.value && (isDate(props.value) ? format(startOfDay(props.value), 'DD-MM-YYYY') : format(date, 'DD-MM-YYYY')) || format(date, 'DD-MM-YYYY'),
-            date:  props.value && (isDate(props.value) ? startOfDay(props.value) : date) || date,
+            date: props.value && (isDate(props.value) ? startOfDay(props.value) : date) || date,
             elem: null,
             openModalCalendar: false,
         }
     }
 
     _onFocus = (event) => {
+
         var onFocus = false;
         var elem = this.state.elem;
         switch (event.type) {
             case 'focus':
+                console.log(this.state.currentValue)
+                this._generateEvent(this.state.currentValue)
             case 'click':
                 onFocus = true;
+
                 elem.focus();
                 break;
             case 'blur':
@@ -76,13 +80,13 @@ class DateField extends Component {
 
     _btn_spin_in = () => {
         return <BtnSpin
-            onClick={() => this._onClickBtnSpin(format(addDays(this.state.date, 1), 'DD-MM-YYYY'))}
+            onClick={() => this._generateEvent(format(addDays(this.state.date, 1), 'DD-MM-YYYY'))}
             onFocus={this._onFocus}
         ><SvgPlus /></BtnSpin>
     }
 
     _btn_spin_out = () => <BtnSpin
-        onClick={() => this._onClickBtnSpin(format(addDays(this.state.date, -1), 'DD-MM-YYYY'))}
+        onClick={() => this._generateEvent(format(addDays(this.state.date, -1), 'DD-MM-YYYY'))}
         onFocus={this._onFocus}
     ><SvgMinus /></BtnSpin>
 
@@ -90,7 +94,7 @@ class DateField extends Component {
         {this._ModalCalendar()}
     </div>)
 
-    _onClickBtnSpin = (value) => {
+    _generateEvent = (value) => {
         var elem = this.state.elem;
         var evt = new Event('change', { bubbles: true });
         elem.value = value;
@@ -110,7 +114,7 @@ class DateField extends Component {
             date,
             currentValue,
         })
-        this._onClickBtnSpin(currentValue);
+        this._generateEvent(currentValue);
         elem.focus();
     }
 

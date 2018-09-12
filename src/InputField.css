@@ -194,6 +194,11 @@ input.ch-input, input.ch-input:not([type]) {
     padding: 0;
 }
 
+input:not([type]):focus:not([readonly]) {
+    border-bottom: none;
+    box-shadow: none;
+}
+
 *:focus {
     outline: 0px;
     
