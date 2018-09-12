@@ -189,7 +189,7 @@ input.ch-input::-ms-clear {
     margin: 0; 
 }
 
-input.ch-input {
+input.ch-input, input.ch-input:not([type]) {
     border: none;
     padding: 0;
 }
