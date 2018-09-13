@@ -11,6 +11,7 @@ input.ch-input {
 }
 
 .ch-field {
+    cursor: text;
     background-color: #ddd;
     height: 56px; 
     border-radius: 4px 4px 0 0;

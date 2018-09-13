@@ -17,17 +17,25 @@ class NumberField extends Component {
     }
 
     _onFocus = (event) => {
-        var onFocus = false;
+        event.bubbles && event.preventDefault();
         var elem = this.state.elem;
         switch (event.type) {
             case 'focus':
             case 'click':
-                onFocus = true;
-                elem.focus();
+                if (!this.state.onFocus) {
+                    this._generateEvent(this.state.currentValue)
+                    this.setState({
+                        onFocus: !this.state.onFocus,
+                    })
+                    elem.focus()
+                }              
+                break;
+            case 'blur':
+                this.setState({
+                    onFocus: !this.state.onFocus,
+                })                
+                break;
         }
-        this.setState({
-            onFocus,
-        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,7 +56,7 @@ class NumberField extends Component {
         onClick={(event) => {
             var value = this.state.currentValue;
             value++
-            this._onClickBtnSpin(value)
+            this._generateEvent(value)
         }}
         onFocus={this._onFocus}
     ><SvgPlus /></BtnSpin>
@@ -57,12 +65,12 @@ class NumberField extends Component {
         onClick={(event) => {
             var value = this.state.currentValue;
             value--
-            this._onClickBtnSpin(value)
+            this._generateEvent(value)
         }}
         onFocus={this._onFocus}
     ><SvgMinus /></BtnSpin>
 
-    _onClickBtnSpin = (value) => {
+    _generateEvent = (value) => {
         var elem = this.state.elem;
         var evt = new Event('change', { bubbles: true });
         elem.value = value;
@@ -83,7 +91,7 @@ class NumberField extends Component {
         } = this.state
         const onActive = !!currentValue;
         return (
-            <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive  })} onBlur={this._onFocus} onFocus={this._onFocus}>
+            <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive  })} onMouseDown={this._onFocus} onBlur={this._onFocus} onClick={this._onFocus}>
                 {Label({ outlined: this.props.outlined, onFocus, onActive, label: this.props.label })}
                 <input ref={this._ref} name={name} value={currentValue} type={this.props.type} className={ClassNameInput({ outlined: this.props.outlined })} onChange={this._onChange} />
                 <div style={{ margin: 'auto 8px', display: 'flex' }} >

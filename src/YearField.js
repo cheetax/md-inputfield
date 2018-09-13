@@ -22,20 +22,25 @@ class YearField extends Component {
     }
 
     _onFocus = (event) => {
-        var onFocus = false;
+        event.bubbles && event.preventDefault();
         var elem = this.state.elem;
-        //console.log('focus click - ' + event.type)
         switch (event.type) {
             case 'focus':
             case 'click':
-                onFocus = true;
-                elem.focus();
+                if (!this.state.onFocus) {
+                    this._generateEvent(format(this.state.date, 'DD-MM-YYYY'))
+                    this.setState({
+                        onFocus: !this.state.onFocus,
+                    })
+                    elem.focus()
+                }              
+                break;
+            case 'blur':
+                this.setState({
+                    onFocus: !this.state.onFocus,
+                })                
+                break;
         }
-
-        this.setState({
-            onFocus,
-        })
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -67,16 +72,16 @@ class YearField extends Component {
     }
 
     _btn_spin_in = () => <BtnSpin
-        onClick={() => this._onClickBtnSpin(format(addYears(this.state.date, 1), 'DD-MM-YYYY'))}
+        onClick={() => this._generateEvent(format(addYears(this.state.date, 1), 'DD-MM-YYYY'))}
         onFocus={this._onFocus}
     ><SvgPlus /></BtnSpin>
 
     _btn_spin_out = () => <BtnSpin
-        onClick={() => this._onClickBtnSpin(format(addYears(this.state.date, -1), 'DD-MM-YYYY'))}
+        onClick={() => this._generateEvent(format(addYears(this.state.date, -1), 'DD-MM-YYYY'))}
         onFocus={this._onFocus}
     ><SvgMinus /></BtnSpin>
 
-    _onClickBtnSpin = (value) => {
+    _generateEvent = (value) => {
         var elem = this.state.elem;
         var evt = new Event('change', { bubbles: true });
         elem.value = value;
@@ -101,7 +106,7 @@ class YearField extends Component {
         const onActive = !!currentValue;
 
         return (
-            <div style={{}} className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
+            <div style={{}} className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })} onMouseDown={this._onFocus} onBlur={this._onFocus} onClick={this._onFocus}>
                 {Label({ outlined: this.props.outlined, onFocus, onActive, label: this.props.label })}
                 <InputMask
                     readOnly

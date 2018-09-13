@@ -23,29 +23,25 @@ class DateField extends Component {
     }
 
     _onFocus = (event) => {
-
-        var onFocus = false;
+        event.bubbles && event.preventDefault();
         var elem = this.state.elem;
         switch (event.type) {
             case 'focus':
-                console.log(this.state.currentValue)
-                this._generateEvent(this.state.currentValue)
             case 'click':
-                onFocus = true;
-
-                elem.focus();
+                if (!this.state.onFocus) {
+                    this._generateEvent(this.state.currentValue)
+                    this.setState({
+                        onFocus: !this.state.onFocus,
+                    })
+                    elem.focus()
+                }              
                 break;
             case 'blur':
-                if (this.state.openModalCalendar) {
-                    onFocus = true;
-                    elem.focus();
-                }
+                this.setState({
+                    onFocus: !this.state.onFocus,
+                })                
                 break;
         }
-
-        this.setState({
-            onFocus,
-        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -137,7 +133,7 @@ class DateField extends Component {
             currentValue, } = this.state;
         const onActive = !!this.state.currentValue;
         return (
-            <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
+            <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })} onMouseDown={this._onFocus} onBlur={this._onFocus} onClick={this._onFocus}>
                 {Label({ outlined: this.props.outlined, onFocus, onActive, label: this.props.label })}
                 <InputMask
                     mask="99-99-9999"

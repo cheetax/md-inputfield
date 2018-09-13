@@ -3,7 +3,7 @@ import { SvgPlus, SvgMinus,  } from './Svg';
 import { Calendar } from 'ch-calendar';
 import { Label } from './Label';
 import { ClassNameCont, ClassNameInput } from './ClassName';
-import { startOfMonth, endOfMonth, addMonths, format, isEqual, isValid, isDate } from 'date-fns';
+import { startOfMonth, endOfMonth, addMonths, format, isEqual, isValid, isDate, startOfDay, endOfDay } from 'date-fns';
 import { toDate } from './toDate';
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
@@ -23,26 +23,25 @@ class MonthField extends Component {
     }
 
     _onFocus = (event) => {
-        var onFocus = false;
+        event.bubbles && event.preventDefault();
         var elem = this.state.elem;
         switch (event.type) {
             case 'focus':
             case 'click':
-                onFocus = true;
-                elem.focus();
+                if (!this.state.onFocus) {
+                    this._generateEvent(format(this.state.date, 'DD-MM-YYYY'))
+                    this.setState({
+                        onFocus: !this.state.onFocus,
+                    })
+                    elem.focus()
+                }            
                 break;
             case 'blur':
-                if (this.state.openModalCalendar) {
-                    onFocus = true;
-                    elem.focus();
-                }
+                this.setState({
+                    onFocus: !this.state.onFocus,
+                })                
                 break;
         }
-
-        this.setState({
-            onFocus,
-        })
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -70,16 +69,16 @@ class MonthField extends Component {
         event.target.value = JSON.stringify(value);
         let props = this.props;
         props.onChange && props.onChange(event)
-        props.onChangeObject && onChangeObject(value)
+        props.onChangeObject && props.onChangeObject(value)
     }
 
     _btn_spin_in = () => <BtnSpin
-        onClick={() => this._onClickBtnSpin(format(addMonths(this.state.date, 1), 'DD-MM-YYYY'))}
+        onClick={() => this._generateEvent(format(addMonths(this.state.date, 1), 'DD-MM-YYYY'))}
         onFocus={this._onFocus}
     ><SvgPlus /></BtnSpin>
 
     _btn_spin_out = () => <BtnSpin
-        onClick={() => this._onClickBtnSpin(format(addMonths(this.state.date, -1), 'DD-MM-YYYY'))}
+        onClick={() => this._generateEvent(format(addMonths(this.state.date, -1), 'DD-MM-YYYY'))}
         onFocus={this._onFocus}
     ><SvgMinus /></BtnSpin>
 
@@ -89,7 +88,7 @@ class MonthField extends Component {
         ><SvgCalendar /></BtnCalendar> */}
     </div>)
 
-    _onClickBtnSpin = (value) => {
+    _generateEvent = (value) => {
         var elem = this.state.elem;
         var evt = new Event('change', { bubbles: true });
         elem.value = value;
@@ -106,7 +105,7 @@ class MonthField extends Component {
             openModalCalendar: false,
             date,
         })
-        this._onClickBtnSpin(format(date, 'DD-MM-YYYY'));
+        this._generateEvent(format(date, 'DD-MM-YYYY'));
         elem.focus();
     }
 
@@ -131,7 +130,7 @@ class MonthField extends Component {
         const currentValue = format(date, 'MMMM YYYY', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] });
         const onActive = !!currentValue;
         return (
-            <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })} onBlur={this._onFocus} onFocus={this._onFocus}>
+            <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })} onMouseDown={this._onFocus} onBlur={this._onFocus} onClick={this._onFocus}>
                 {Label({ outlined: this.props.outlined, onFocus, onActive, label: this.props.label })}
                 <InputMask
                     readOnly
