@@ -18,12 +18,12 @@ class DateField extends Component {
             currentValue: props.value && (isDate(props.value) ? format(startOfDay(props.value), 'DD-MM-YYYY') : format(date, 'DD-MM-YYYY')) || format(date, 'DD-MM-YYYY'),
             date: props.value && (isDate(props.value) ? startOfDay(props.value) : date) || date,
             elem: null,
-            openModalCalendar: false,
         }
     }
 
     _onFocus = (event) => {
         event.bubbles && event.preventDefault();
+        //event.preventDefault()
         var elem = this.state.elem;
         switch (event.type) {
             case 'focus':
@@ -39,7 +39,7 @@ class DateField extends Component {
             case 'blur':
                 this.setState({
                     onFocus: !this.state.onFocus,
-                })                
+                })
                 break;
         }
     }
@@ -115,7 +115,7 @@ class DateField extends Component {
     }
 
     _ModalCalendar = () => <div >
-        <Calendar isModal isButtonActive date={this.state.date} onSelect={this._onSelectCalendar} />
+        <Calendar isModal isClose={!this.state.onFocus} isButtonActive date={this.state.date} onSelect={this._onSelectCalendar} />
     </div>
 
     _ref = (elem) => {

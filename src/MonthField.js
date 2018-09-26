@@ -110,7 +110,7 @@ class MonthField extends Component {
     }
 
     _ModalCalendar = () => <div >
-        <Calendar isModal isMonth isButtonActive date={this.state.date} onSelect={this._onSelectCalendar} />
+        <Calendar isModal isMonth isClose={!this.state.onFocus} isButtonActive date={this.state.date} onSelect={this._onSelectCalendar} />
     </div>
 
     _ref = (elem) => {
