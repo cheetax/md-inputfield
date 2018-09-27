@@ -105,7 +105,7 @@ input.ch-input.outlined {
     left: 0;
     font-size: 14px;
     font-weight: 400;
-    transition: .3s;
+    transition: .3s, margin 0s;
 }
 
 .ch-label:not(.outlined).active {
@@ -121,7 +121,7 @@ input.ch-input.outlined {
     font-size: 12px;
     transform: translateY(-26px) ;
     transition-property: transform, font-size, color;
-    transition: .3s, color 0s;
+    transition: .3s, color 0s, margin 0s;
 }
 
 .ch-label-outlined-cont {
@@ -137,19 +137,18 @@ input.ch-input.outlined {
 .ch-label.outlined:not(.focus).active {    
     font-size: 12px;
     transform: translateY(-26px) ;
-    transition: transform, font-size, margin .3s
+    transition: .3s, margin 0s;
 }
 
 .ch-field.outlined.focus, .ch-field.outlined.focus:hover {
-    border: 2px solid;
+    border: 2px solid  #4caf50;
     padding: 0px;
-    border-color: #4caf50;
-    transition: 0.3s;
+    /* transition: 3s; */
 }
 
 .ch-field.outlined:hover, .ch-field.outlined.active:not(.focus):hover {
     border: 1px solid;
-    transition: 0.3s;
+    /* transition: 0.3s; */
 }
 
 .ch-field.focus {
@@ -161,7 +160,7 @@ input.ch-input.outlined {
 .ch-field.outlined.active:not(.focus) {
     border: 1px solid #ddd;
     padding: 1px;
-    transition: 0.3s;
+    /* transition: 3s; */
 }
 
 .ch-label-outlined-top {
