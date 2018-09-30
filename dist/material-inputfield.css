@@ -408,7 +408,7 @@ a.btn-select {
     transform: translateY(-100%);
     transition: .3s;
 }
-.modal-calendar-button {
+.modal-dialog-button {
     position: absolute;
     top: 100%;
     right: 0;
@@ -425,13 +425,13 @@ a.btn-select {
     transition: 0.5s;
 }
 
-.modal-calendar-button.active, .modal-calendar-flex.active, .modal-calendar-overlay.active {
+.modal-dialog-button.active, .modal-dialog-flex.active, .modal-dialog-overlay.active {
     opacity: 1;
     transform: scale(1);    
     transition: .5s;
 }
 
-.modal-calendar-flex {
+.modal-dialog-flex {
     position: absolute;
     opacity: .5;
     background: #FFFFFF;
@@ -446,7 +446,7 @@ a.btn-select {
     transition: 0.5s;
 }
 
-.modal-calendar-overlay {
+.modal-dialog-overlay {
     position: fixed;
     display: flex;
     justify-content: center;
