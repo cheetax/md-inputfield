@@ -122,10 +122,10 @@ class DateField extends Component {
         this.setState({ elem })
     }
 
-    _spinButtons = (() => (this.props.onSpinButtons) ? <div style={{ display: 'flex' }} >
+    _spinButtons = () => (this.props.onSpinButtons) && <div style={{ display: 'flex' }} >
         {this._btn_spin_out()}
         {this._btn_spin_in()}
-    </div> : null)
+    </div>
 
     render() {
         const {

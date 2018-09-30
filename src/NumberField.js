@@ -79,10 +79,12 @@ class NumberField extends Component {
 
     _ref = (elem) => this.setState({ elem })
 
-    _spinButtons = () => (this.props.onSpinButtons) ? <div style={{ display: 'flex' }} >
+    _spinButtons = () => (this.props.onSpinButtons) && <div style={{ display: 'flex' }} >
         {this._btn_spin_out()}
         {this._btn_spin_in()}
-    </div> : null
+    </div>
+
+    _extSpinButton = () => (this.props.extSpinButton) && this.props.extSpinButton()
 
     render() {
         const {
@@ -95,6 +97,7 @@ class NumberField extends Component {
                 {Label({ outlined: this.props.outlined, onFocus, onActive, label: this.props.label })}
                 <input ref={this._ref} name={name} value={currentValue} type={this.props.type} className={ClassNameInput({ outlined: this.props.outlined })} onChange={this._onChange} />
                 <div style={{ margin: 'auto 8px', display: 'flex' }} >
+                    {this._extSpinButton()}
                     {this._spinButtons()}
                 </div>
             </div>
