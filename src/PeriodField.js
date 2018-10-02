@@ -1,19 +1,81 @@
 import React, { Component } from 'react';
 import { Label } from './Label';
-import { ClassNameCont, ClassNameInput } from './ClassName';
+import { ClassNameCont, ClassNameInput } from './ClassName'; 0
+import InputMask from 'react-input-mask';
+import {
+    addDays,
+    addQuarters,
+    addMonths,
+    addYears,
+    isEqual,
+    isSameMonth,
+    isFirstDayOfMonth,
+    isLastDayOfMonth,
+    isSameQuarter,
+    isFirstDayOfQuarter,
+    lastDayOfQuarter,
+    isSameYear,
+    startOfYear,
+    endOfYear,
+    differenceInDays,
+    getMonth,
+    format,
+    getYear,
+    getQuarter,
+    endOfQuarter,
+    startOfQuarter
+} from 'date-fns'
 import { BtnSpin } from './BtnSpin';
 import { SvgPlus, SvgMinus } from './Svg';
 //import './NumberField.css'
 
-class NumberField extends Component {
+
+
+class PeriodField extends Component {
 
     constructor(props) {
         super(props)
+        let dateFrom = props.dateFrom || new Date(),
+            dateTo = props.dateTo || new Date(),
+            { type, period } = this._setPeriod({ dateFrom, dateTo });
         this.state = {
             onFocus: false,
-            currentValue: (props.value !== undefined) ? props.value : '',
+            dateFrom,
+            dateTo,
+            type,
+            period,
             elem: null
         }
+    }
+
+    _setPeriod = ({ dateFrom, dateTo }) => {
+        return isEqual(dateFrom, dateTo) && { type: 'day', period: 1 } ||
+            (isSameMonth(dateFrom, dateTo)) && (isFirstDayOfMonth(dateFrom) && isLastDayOfMonth(dateTo)) && { type: 'month', period: 1 } ||
+            (isSameQuarter(dateFrom, dateTo)) && (isEqual(startOfQuarter(dateFrom), dateFrom) && isEqual(endOfQuarter(dateTo), dateTo)) && { type: 'quarter', period: 1 } ||
+            (isSameYear(dateFrom, dateTo)) && (isEqual(startOfYear(dateFrom), dateFrom) && isEqual(endOfYear(dateTo), dateTo)) && { type: 'year', period: 1 } || { type: 'days', period: differenceInDays(dateTo, dateFrom) }
+
+    }
+
+    _getPeriod = ({ type, dateFrom, dateTo }) => {
+        var result = '';
+        switch (type) {
+            case 'day':
+                result = format(dateFrom, 'DD-MM-YYYY');
+                break;
+            case 'month':
+                result = format(dateFrom, 'MMMM YYYY')
+                break;
+            case 'year':
+                result = getYear(dateFrom);
+                break;
+            case 'quarter':
+                result = format(dateFrom, 'Q') + ' квартал ' + format(dateFrom, 'YYYY')
+                break;
+            case 'days':
+                result = format(dateFrom, 'DD-MM-YYYY') + ' - ' + format(dateTo, 'DD-MM-YYYY')
+        }
+        console.log('getPeriod', type, dateFrom, dateTo)
+        return result;
     }
 
     _onFocus = (event) => {
@@ -28,21 +90,24 @@ class NumberField extends Component {
                         onFocus: !this.state.onFocus,
                     })
                     elem.focus()
-                }              
+                }
                 break;
             case 'blur':
                 this.setState({
                     onFocus: !this.state.onFocus,
-                })                
+                })
                 break;
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.value) {
-            if ((nextProps.value !== this.props.value))
-                this.setState({ currentValue: nextProps.value })
-        }
+        // if (nextProps.value) {
+        //     if ((nextProps.value !== this.props.value))
+        // }
+        let {
+            dateFrom, dateTo
+        } = nextProps
+        this.setState({ dateFrom, dateTo, type: this._setPeriod({ dateFrom, dateTo }).type })
     }
 
     _onChange = (event) => {
@@ -89,13 +154,21 @@ class NumberField extends Component {
     render() {
         const {
             onFocus,
-            currentValue,
         } = this.state
+        console.log(this.state)
+        const currentValue = this._getPeriod(this.state)
         const onActive = !!currentValue;
         return (
-            <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive  })} onMouseDown={this._onFocus} onBlur={this._onFocus} onClick={this._onFocus}>
+            <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })} onMouseDown={this._onFocus} onBlur={this._onFocus} onClick={this._onFocus}>
                 {Label({ outlined: this.props.outlined, onFocus, onActive, label: this.props.label })}
-                <input ref={this._ref} name={name} value={currentValue} type={this.props.type} className={ClassNameInput({ outlined: this.props.outlined })} onChange={this._onChange} />
+                <InputMask
+                    readOnly
+                    inputRef={this._ref}
+                    name={name}
+                    value={currentValue}
+                    type='text'
+                    className={ClassNameInput({ outlined: this.props.outlined })}
+                />
                 <div style={{ margin: 'auto 8px', display: 'flex' }} >
                     {this._extSpinButton()}
                     {this._spinButtons()}
@@ -104,4 +177,4 @@ class NumberField extends Component {
         )
     }
 }
-export default NumberField;
+export default PeriodField;

@@ -3,6 +3,7 @@ import DateField from "./DateField";
 import MonthField from "./MonthField";
 import QuarterField from "./QuarterField";
 import YearField from "./YearField";
+import PeriodField from './PeriodField'
 import { BtnSpin } from './BtnSpin';
 import './InputField.css'
 import './btnSpin.css';
@@ -15,4 +16,5 @@ export {
     QuarterField,
     YearField,
     BtnSpin,
+    PeriodField,
 };
