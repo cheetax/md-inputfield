@@ -74,7 +74,7 @@ class PeriodField extends Component {
             case 'days':
                 result = format(dateFrom, 'DD-MM-YYYY') + ' - ' + format(dateTo, 'DD-MM-YYYY')
         }
-        console.log('getPeriod', type, dateFrom, dateTo)
+        //console.log('getPeriod', type, dateFrom, dateTo)
         return result;
     }
 
