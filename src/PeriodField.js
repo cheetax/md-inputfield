@@ -155,7 +155,7 @@ class PeriodField extends Component {
         const {
             onFocus,
         } = this.state
-        console.log(this.state)
+        //console.log(this.state)
         const currentValue = this._getPeriod(this.state)
         const onActive = !!currentValue;
         return (
