@@ -79,22 +79,30 @@ class PeriodField extends Component {
     }
 
     _onFocus = (event) => {
-        event.bubbles && event.preventDefault();
+        console.log('period', event.type, event.bubbles)
+        event.stopPropagation();
+        event.preventDefault();
         var elem = this.state.elem;
         switch (event.type) {
             case 'focus':
+                this.setState({
+                    onFocus: true,
+                })
+                break;
             case 'click':
+                console.log(this.state.onFocus)
                 if (!this.state.onFocus) {
                     this._generateEvent(this.state.currentValue)
                     this.setState({
-                        onFocus: !this.state.onFocus,
+                        onFocus: true,
                     })
-                    elem.focus()
+                    
                 }
+                elem.focus()
                 break;
             case 'blur':
                 this.setState({
-                    onFocus: !this.state.onFocus,
+                    onFocus: false,
                 })
                 break;
         }
@@ -115,6 +123,8 @@ class PeriodField extends Component {
             currentValue: event.target.value,
         })
         this.props.onChange && this.props.onChange(event)
+        var elem = this.state.elem
+        elem.focus()
     }
 
     _btn_spin_in = () => <BtnSpin
@@ -159,7 +169,12 @@ class PeriodField extends Component {
         const currentValue = this._getPeriod(this.state)
         const onActive = !!currentValue;
         return (
-            <div className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })} onMouseDown={this._onFocus} onBlur={this._onFocus} onClick={this._onFocus}>
+            <div
+                className={ClassNameCont({ outlined: this.props.outlined, onFocus, onActive })}
+                onFocus={this._onFocus}
+                onMouseDown={this._onFocus}
+                onBlur={this._onFocus}
+                onClick={this._onFocus}>
                 {Label({ outlined: this.props.outlined, onFocus, onActive, label: this.props.label })}
                 <InputMask
                     readOnly

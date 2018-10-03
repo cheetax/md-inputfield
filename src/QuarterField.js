@@ -27,7 +27,8 @@ class QuarterField extends Component {
     }
 
     _onFocus = (event) => {
-        event.bubbles && event.preventDefault();
+        event.stopPropagation();
+        //event.preventDefault();
         var elem = this.state.elem;
         switch (event.type) {
             case 'focus':
@@ -35,14 +36,15 @@ class QuarterField extends Component {
                 if (!this.state.onFocus) {
                     this._generateEvent(format(this.state.date, 'DD-MM-YYYY'))
                     this.setState({
-                        onFocus: !this.state.onFocus,
+                        onFocus: true,
                     })
-                    elem.focus()
-                }         
+                    
+                }    
+                elem.focus()
                 break;
             case 'blur':
                 this.setState({
-                    onFocus: !this.state.onFocus,
+                    onFocus: false,
                 })                
                 break;
         }

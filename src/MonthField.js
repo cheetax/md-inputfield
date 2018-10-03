@@ -23,7 +23,8 @@ class MonthField extends Component {
     }
 
     _onFocus = (event) => {
-        event.bubbles && event.preventDefault();
+        event.stopPropagation();
+        event.preventDefault();
         var elem = this.state.elem;
         switch (event.type) {
             case 'focus':
@@ -33,12 +34,13 @@ class MonthField extends Component {
                     this.setState({
                         onFocus: !this.state.onFocus,
                     })
-                    elem.focus()
-                }            
+                    
+                }       
+                elem.focus()
                 break;
             case 'blur':
                 this.setState({
-                    onFocus: !this.state.onFocus,
+                    onFocus: false,
                 })                
                 break;
         }
