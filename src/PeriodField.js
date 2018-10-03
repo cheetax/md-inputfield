@@ -23,7 +23,9 @@ import {
     getYear,
     getQuarter,
     endOfQuarter,
-    startOfQuarter
+    startOfQuarter,
+    compareAsc,
+    startOfDay
 } from 'date-fns'
 import { BtnSpin } from './BtnSpin';
 import { SvgPlus, SvgMinus } from './Svg';
@@ -49,7 +51,7 @@ class PeriodField extends Component {
     }
 
     _setPeriod = ({ dateFrom, dateTo }) => {
-        return isEqual(dateFrom, dateTo) && { type: 'day', period: 1 } ||
+        return isEqual(startOfDay(dateFrom), startOfDay(dateTo)) && { type: 'day', period: 1 } ||
             (isSameMonth(dateFrom, dateTo)) && (isFirstDayOfMonth(dateFrom) && isLastDayOfMonth(dateTo)) && { type: 'month', period: 1 } ||
             (isSameQuarter(dateFrom, dateTo)) && (isEqual(startOfQuarter(dateFrom), dateFrom) && isEqual(endOfQuarter(dateTo), dateTo)) && { type: 'quarter', period: 1 } ||
             (isSameYear(dateFrom, dateTo)) && (isEqual(startOfYear(dateFrom), dateFrom) && isEqual(endOfYear(dateTo), dateTo)) && { type: 'year', period: 1 } || { type: 'days', period: differenceInDays(dateTo, dateFrom) }
@@ -79,7 +81,6 @@ class PeriodField extends Component {
     }
 
     _onFocus = (event) => {
-        console.log('period', event.type, event.bubbles)
         event.stopPropagation();
         event.preventDefault();
         var elem = this.state.elem;
@@ -90,7 +91,6 @@ class PeriodField extends Component {
                 })
                 break;
             case 'click':
-                console.log(this.state.onFocus)
                 if (!this.state.onFocus) {
                     this._generateEvent(this.state.currentValue)
                     this.setState({
