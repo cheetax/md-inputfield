@@ -1,34 +1,28 @@
 import React, { Component } from 'react';
 import { Label } from './Label';
+import changeDate from './changeDate'
 import { ClassNameCont, ClassNameInput } from './ClassName'; 0
 import InputMask from 'react-input-mask';
 import {
-    addDays,
-    addQuarters,
-    addMonths,
-    addYears,
     isEqual,
     isSameMonth,
     isFirstDayOfMonth,
     isLastDayOfMonth,
     isSameQuarter,
-    isFirstDayOfQuarter,
-    lastDayOfQuarter,
     isSameYear,
     startOfYear,
     endOfYear,
     differenceInDays,
-    getMonth,
     format,
     getYear,
-    getQuarter,
     endOfQuarter,
     startOfQuarter,
-    compareAsc,
-    startOfDay
+    startOfDay,
+    parse
 } from 'date-fns'
 import { BtnSpin } from './BtnSpin';
 import { SvgPlus, SvgMinus } from './Svg';
+import { locales } from './locales';
 //import './NumberField.css'
 
 
@@ -65,7 +59,7 @@ class PeriodField extends Component {
                 result = format(dateFrom, 'DD-MM-YYYY');
                 break;
             case 'month':
-                result = format(dateFrom, 'MMMM YYYY')
+                result = format(dateFrom, 'MMMM YYYY', { locale: locales[navigator.browserLanguage || navigator.language || navigator.userLanguage] })
                 break;
             case 'year':
                 result = getYear(dateFrom);
@@ -96,7 +90,7 @@ class PeriodField extends Component {
                     this.setState({
                         onFocus: true,
                     })
-                    
+
                 }
                 elem.focus()
                 break;
@@ -119,28 +113,35 @@ class PeriodField extends Component {
     }
 
     _onChange = (event) => {
-        this.setState({
-            currentValue: event.target.value,
-        })
-        this.props.onChange && this.props.onChange(event)
-        var elem = this.state.elem
-        elem.focus()
+        if (event.target.value !== 'undefined') {
+            let value = JSON.parse(event.target.value, (key, value) => (!key) ? value : parse(value))
+            this.setState({
+                ...value,
+            })
+            let props = this.props
+            props.onChange && props.onChange(event)
+            props.onChangeObject && props.onChangeObject(value)
+        }
     }
 
     _btn_spin_in = () => <BtnSpin
-        onClick={(event) => {
-            var value = this.state.currentValue;
-            value++
-            this._generateEvent(value)
+        onClick={() => {
+            let period = {
+                dateFrom: changeDate({ date: this.state.dateFrom, type: this.state.type, changeValue: this.state.period }),
+                dateTo: changeDate({ date: this.state.dateTo, type: this.state.type, changeValue: this.state.period })
+            }
+            this._generateEvent(period)
         }}
         onFocus={this._onFocus}
     ><SvgPlus /></BtnSpin>
 
     _btn_spin_out = () => <BtnSpin
-        onClick={(event) => {
-            var value = this.state.currentValue;
-            value--
-            this._generateEvent(value)
+        onClick={() => {
+            let period = {
+                dateFrom: changeDate({ date: this.state.dateFrom, type: this.state.type, changeValue: -(this.state.period) }),
+                dateTo: changeDate({ date: this.state.dateTo, type: this.state.type, changeValue: -(this.state.period) })
+            }
+            this._generateEvent(period)
         }}
         onFocus={this._onFocus}
     ><SvgMinus /></BtnSpin>
@@ -148,7 +149,7 @@ class PeriodField extends Component {
     _generateEvent = (value) => {
         var elem = this.state.elem;
         var evt = new Event('change', { bubbles: true });
-        elem.value = value;
+        elem.value = JSON.stringify(value);
         elem.dispatchEvent(evt) && this._onChange(evt);
     }
 
