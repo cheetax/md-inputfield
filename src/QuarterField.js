@@ -19,7 +19,7 @@ class QuarterField extends Component {
         //console.log(date)
         this.state = {
             onFocus: false,
-            date,
+            date: props.value && (isDate(props.value) ? startOfQuarter(props.value) : date) || date,
             elem: null,
         }
         // this._onFocus = this._onFocus.bind(this)
@@ -28,7 +28,7 @@ class QuarterField extends Component {
 
     _onFocus = (event) => {
         event.stopPropagation();
-        //event.preventDefault();
+        event.preventDefault();
         var elem = this.state.elem;
         switch (event.type) {
             case 'focus':

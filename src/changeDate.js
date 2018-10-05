@@ -2,7 +2,10 @@ import {
     addDays,
     addMonths,
     addQuarters,
-    addYears
+    addYears,
+    isLastDayOfMonth,
+    endOfMonth,
+    startOfMonth
 } from 'date-fns'
 
 const changeDate = ({ date, type, changeValue }) => {
@@ -11,9 +14,9 @@ const changeDate = ({ date, type, changeValue }) => {
         case 'days':
             return addDays(date, changeValue)
         case 'month':
-            return addMonths(date, changeValue)
+            return isLastDayOfMonth(date) && endOfMonth(addMonths(date, changeValue)) || startOfMonth(addMonths(date, changeValue))
         case 'quarter':
-            return addQuarters(date, changeValue)
+            return isLastDayOfMonth(date) && endOfMonth(addQuarters(date, changeValue)) || startOfMonth(addQuarters(date, changeValue))
         case 'year':
             return addYears(date, changeValue)
         default:

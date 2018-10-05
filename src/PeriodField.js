@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Label } from './Label';
 import changeDate from './changeDate'
-import { ClassNameCont, ClassNameInput } from './ClassName'; 0
+import { ClassNameCont, ClassNameInput } from './ClassName'; 
 import InputMask from 'react-input-mask';
 import {
     isEqual,
@@ -44,13 +44,11 @@ class PeriodField extends Component {
         }
     }
 
-    _setPeriod = ({ dateFrom, dateTo }) => {
-        return isEqual(startOfDay(dateFrom), startOfDay(dateTo)) && { type: 'day', period: 1 } ||
+    _setPeriod = ({ dateFrom, dateTo }) => isEqual(startOfDay(dateFrom), startOfDay(dateTo)) && { type: 'day', period: 1 } ||
             (isSameMonth(dateFrom, dateTo)) && (isFirstDayOfMonth(dateFrom) && isLastDayOfMonth(dateTo)) && { type: 'month', period: 1 } ||
             (isSameQuarter(dateFrom, dateTo)) && (isEqual(startOfQuarter(dateFrom), dateFrom) && isEqual(endOfQuarter(dateTo), dateTo)) && { type: 'quarter', period: 1 } ||
             (isSameYear(dateFrom, dateTo)) && (isEqual(startOfYear(dateFrom), dateFrom) && isEqual(endOfYear(dateTo), dateTo)) && { type: 'year', period: 1 } || { type: 'days', period: differenceInDays(dateTo, dateFrom) }
-
-    }
+        
 
     _getPeriod = ({ type, dateFrom, dateTo }) => {
         var result = '';
@@ -117,6 +115,7 @@ class PeriodField extends Component {
             let value = JSON.parse(event.target.value, (key, value) => (!key) ? value : parse(value))
             this.setState({
                 ...value,
+                ...this._setPeriod({...value})
             })
             let props = this.props
             props.onChange && props.onChange(event)

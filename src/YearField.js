@@ -16,7 +16,7 @@ class YearField extends Component {
         //console.log(date)
         this.state = {
             onFocus: false,
-            date,
+            date: props.value && (isDate(props.value) ? startOfYear(props.value) : date) || date,
             elem: null,
         }
     }
